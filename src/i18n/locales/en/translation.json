@@ -1,0 +1,71 @@
+{
+  "license_disclaimer": "This project is licensed under the Apache License 2.0, which premits use, modification, and redistribution—both commercial and non-commercial—provided the original copyright notices are retained. Some third-party libraries and APIs are utilized and remain governed by their respective licenses; please refer to their official repositories or websites for futher information.",
+  "powered": "Powered by",
+  "search_placeholder": "Search city...",
+  "read": "Read more",
+  "localtime": "Local time",
+  "now": "Now",
+  "temp": "Temperature",
+  "speed": "Speed",
+  "wind": "Wind",
+  "humidity": "Humidity",
+  "last_update": "Last updated",
+  "feels_like": "Feels Like",
+  "cloudy": "Cloudy",
+  "avg": "Average",
+  "min": "Minimum",
+  "max": "Maximum",
+  "prob": "Probability",
+  "rain": "Rain",
+  "uv": "UV index",
+  "uv_full": "Ultraviolet Radiation",
+  "mph": "Miles per hour",
+  "kmh": "Kilometer per hour",
+  "common": {
+    "system": "System"
+  },
+  "uv_index": {
+    "low": "Low",
+    "moderate": "Moderate",
+    "high": "High",
+    "very_high": "Very High",
+    "extreme": "Extreme"
+  },
+  "titles": {
+    "forecast": {
+      "title": "Next Days",
+      "description": "Showing forecast for the next {{days}} days"
+    },
+    "search": {
+      "title": "Searches for",
+      "description": "Showing {{count}} result(s)",
+      "button": "Select"
+    },
+    "chart": {
+      "rain": "Rain Chance",
+      "desc": "Displaying {{hours}} hours"
+    }
+  },
+  "connection": {
+    "in_progress": "Connecting...",
+    "done": "Connected!",
+    "error": "Error Connecting!",
+    "wait": "Wait a moment!",
+    "later": "Please try again later"
+  },
+  "settings": {
+    "theme": {
+      "btn": "Change Theme"
+    },
+    "unit": {
+      "btn": "Unit",
+      "label": "Unit Settings"
+    },
+    "lng": {
+      "btn": "Language",
+      "label": "Language Settings",
+      "pt": "Portuguese, Brazil",
+      "en": "English"
+    }
+  }
+}

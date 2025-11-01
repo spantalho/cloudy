@@ -1,0 +1,71 @@
+{
+  "license_disclaimer": "Este projeto é licenciado sob a Apache License 2.0, permitindo o uso, modificação e redistribuição — com ou sem fins lucrativos — desde que os avisos de licença originais sejam mantidos. Algumas bibliotecas e APIs de terceiros são utilizadas e permanecem sob suas respectivas licenças; consulte seus repositórios ou sites oficiais para mais informações.",
+  "powered": "Dados de",
+  "search_placeholder": "Buscar cidade...",
+  "read": "Saiba mais",
+  "localtime": "Horário local",
+  "now": "Agora",
+  "temp": "Temperatura",
+  "speed": "Velocidade",
+  "wind": "Vento",
+  "humidity": "Umidade",
+  "last_update": "Última atualização",
+  "feels_like": "Sensação",
+  "cloudy": "Encoberto",
+  "avg": "Média",
+  "min": "Mínima",
+  "max": "Máxima",
+  "prob": "Probabilidade",
+  "rain": "Chuva",
+  "uv": "Índice UV",
+  "uv_full": "Raios Ultravioleta",
+  "mph": "Milhas por hora",
+  "kmh": "Quilômetro por hora",
+  "common": {
+    "system": "Sistema"
+  },
+  "uv_index": {
+    "low": "Baixo",
+    "moderate": "Moderado",
+    "high": "Alto",
+    "very_high": "Muito Alto",
+    "extreme": "Extremo"
+  },
+  "titles": {
+    "forecast": {
+      "title": "Próximos Dias",
+      "description": "Exibindo previsão para os próximos {{days}} dias"
+    },
+    "search": {
+      "title": "Buscas para",
+      "description": "Exibindo {{count}} resultado(s)",
+      "button": "Selecionar"
+    },
+    "chart": {
+      "rain": "Chance de Chuva",
+      "desc": "Exibindo {{hours}} horas"
+    }
+  },
+  "connection": {
+    "in_progress": "Conectando...",
+    "done": "Conectado!",
+    "error": "Erro na conexão!",
+    "wait": "Aguarde um momento!",
+    "later": "Por favor, tente novamente mais tarde"
+  },
+  "settings": {
+    "theme": {
+      "btn": "Alterar Tema"
+    },
+    "unit": {
+      "btn": "Unidades",
+      "label": "Configurações de Unidades"
+    },
+    "lng": {
+      "btn": "Idiomas",
+      "label": "Configurações de Idiomas",
+      "pt": "Português, Brasil",
+      "en": "Inglês"
+    }
+  }
+}
