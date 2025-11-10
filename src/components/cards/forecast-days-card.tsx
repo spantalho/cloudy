@@ -1,24 +1,18 @@
 import { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import * as card from "../ui/card";
 import WeatherIcon from "@/utils/weather-icons";
-import { fetchForecast } from "@/services/forecast-service";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCity } from "@/contexts/city-context";
 import { formateDateDay } from "@/utils/format-date";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
 import type { Forecast, ModelDay } from "@/interfaces";
 import { useLang } from "@/hooks/use-lang";
 import { useUnit } from "@/hooks/use-unit";
 import { useConfig } from "@/contexts/config-context";
+import { useForecast } from "@/hooks/services/use-forecast";
 
 export default function ForecastDaysCard() {
+  const [location, setLocation] = useState<Forecast["location"]>()
   const [days, setDays] = useState<Forecast["forecast"]>([]);
   const { city } = useCity();
   const { t } = useTranslation();
@@ -26,14 +20,17 @@ export default function ForecastDaysCard() {
   const { tempUnit } = useUnit();
   const { appConfig } = useConfig();
 
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["forecast", appConfig, city, 3],
-    queryFn: () => fetchForecast(city, appConfig, false, 3),
-  });
+  const { data, isLoading, isError, error } = useForecast(
+    city,
+    appConfig,
+    false,
+    3
+  );
 
   useEffect(() => {
     if (!data) return;
     setDays(Array.isArray(data.forecast) ? data.forecast : []);
+    setLocation(data.location ?? null)
   }, [data]);
 
   if (isError) {
@@ -45,23 +42,23 @@ export default function ForecastDaysCard() {
   }
 
   return (
-    <Card className="transition-colors pointer-events-none">
-      <CardHeader className="text-center md:text-start">
-        <CardTitle className="font-unbounded tracking-tight">
+    <card.Card id="forecast" className="transition-colors pointer-events-none">
+      <card.CardHeader className="text-center md:text-start">
+        <card.CardTitle className="font-normal font-unbounded tracking-tight">
           {t("titles.forecast.title")}
-        </CardTitle>
-        <CardDescription>
-          {t("titles.forecast.description", { days: days.length })}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col  gap-5 justify-around md:flex-row">
+        </card.CardTitle>
+        <card.CardDescription>
+          {t("titles.forecast.description", { days: days.length - 1 })}
+        </card.CardDescription>
+      </card.CardHeader>
+      <card.CardContent className="flex flex-col gap-5 justify-around md:flex-row">
         {days.map((day: ModelDay) => (
           <div
             key={day.date}
             className="transition-colors items-center flex flex-col gap-1.5 px-3 py-1 rounded-lg"
           >
-            <span className="font-light text-primary/70">
-              {formateDateDay(day.date, { lang: lang, short: true })}
+            <span className="text-base font-light text-muted capitalize">
+              {formateDateDay(day.date, { lang: lang, short: true, timezone: location?.tzId })}
             </span>
             <WeatherIcon isDay={true} code={day.condition.code} size={38} />
             {day.chanceOfRain > 0 && (
@@ -76,7 +73,7 @@ export default function ForecastDaysCard() {
                 )}
                 °
               </p>
-              <p className="font-semibold text-xs text-primary/70">
+              <p className="font-semibold text-xs text-muted">
                 {Math.trunc(
                   tempUnit === "celsius" ? day.temp.minC : day.temp.minF
                 )}
@@ -85,7 +82,7 @@ export default function ForecastDaysCard() {
             </div>
           </div>
         ))}
-      </CardContent>
-    </Card>
+      </card.CardContent>
+    </card.Card>
   );
 }

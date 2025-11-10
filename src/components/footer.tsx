@@ -3,91 +3,108 @@ import { useTranslation } from "react-i18next";
 import { useLang } from "@/hooks/use-lang";
 import { Separator } from "./ui/separator";
 import { Badge } from "./ui/badge";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { IconLink, Link } from "./common/link";
+import * as tooltip from "./ui/tooltip";
+import * as avatar from "./ui/avatar";
+import * as link from "./common/link";
 import { useConfig } from "@/contexts/config-context";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 export default function Footer() {
   const { appConfig } = useConfig();
   const { t } = useTranslation();
   const { lang } = useLang();
 
-  return (
-    <footer className="flex flex-col items-center border-t w-full py-3">
-      <div className="flex items-center w-full justify-between text-xs max-w-2xl md:max-w-3xl lg:max-w-4xl">
-        <ul className="flex items-center gap-5">
-          <li className="text-muted">
-            <span className="mr-2">&copy; 2025</span>
-            <Tooltip>
-              <TooltipTrigger>
-                <Link href={appConfig.URLS.app.author_github ?? "#"}>
-                  {appConfig.APP.author || "[your name]"}
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent className="flex items-center justify-center p-5">
-                <Avatar className="rounded-md scale-200">
-                  <AvatarFallback>
-                    {appConfig.APP.author?.slice(0, 3) ?? "usr"}
-                  </AvatarFallback>
-                  <AvatarImage
-                    src={`${appConfig.URLS.app.author_github}.png`}
-                  />
-                </Avatar>
-              </TooltipContent>
-            </Tooltip>
-          </li>
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
-          <Separator className="h-4!" orientation="vertical" />
+  return (
+    <footer className="flex flex-col items-center border-t w-full py-5 pb-20 md:py-3 md:pb-3">
+      <div className="flex flex-col md:flex-row items-start md:items-center w-full justify-between text-xs max-w-2xl md:max-w-3xl lg:max-w-4xl gap-5 md:gap-0">
+        <ul className="flex flex-col md:flex-row items-center md:items-center gap-3 md:gap-5 w-full md:w-auto text-center md:text-left">
+          {isDesktop && (
+            <li className="opacity-70">
+              <span className="mr-2">&copy; 2025</span>
+              <tooltip.Tooltip>
+                <tooltip.TooltipTrigger>
+                  <link.Link href={appConfig.URLS.app.author_github ?? "#"}>
+                    {appConfig.APP.author || "[your name]"}
+                  </link.Link>
+                </tooltip.TooltipTrigger>
+                <tooltip.TooltipContent className="flex items-center justify-center p-6">
+                  <avatar.Avatar className="rounded-md scale-200">
+                    <avatar.AvatarFallback>
+                      {appConfig.APP.author?.slice(0, 3) ?? "usr"}
+                    </avatar.AvatarFallback>
+                    <avatar.AvatarImage
+                      src={
+                        appConfig.URLS.app.author_github
+                          ? `${appConfig.URLS.app.author_github}.png`
+                          : ""
+                      }
+                    />
+                  </avatar.Avatar>
+                </tooltip.TooltipContent>
+              </tooltip.Tooltip>
+            </li>
+          )}
+
+          <div className="hidden md:flex items-center">
+            <Separator className="h-4!" orientation="vertical" />
+          </div>
 
           {appConfig.URLS.app.repo && (
             <li>
-              <Link href={`${appConfig.URLS.app.repo}#readme`}>
+              <link.Link href={`${appConfig.URLS.app.repo}#readme`}>
                 {lang === "en" ? "About" : "Sobre"}
-              </Link>
+              </link.Link>
             </li>
           )}
 
           <li>
-            <Tooltip>
-              <TooltipTrigger>
-                <Link href={`${appConfig.URLS.app.license}`}>
+            <tooltip.Tooltip>
+              <tooltip.TooltipTrigger>
+                <link.Link href={`${appConfig.URLS.app.license}`}>
                   {lang === "en" ? "License" : "Licença"}
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-[25em]">
+                </link.Link>
+              </tooltip.TooltipTrigger>
+              <tooltip.TooltipContent className="max-w-[25em]">
                 <div>
                   <h2 className="font-unbounded tracking-tight font-bold mb-2 capitalize">
-                    &copy; {appConfig.APP.license}
+                    Third-Party Disclaimer
                   </h2>
                   <p>{t("license_disclaimer")}</p>
                 </div>
-              </TooltipContent>
-            </Tooltip>
+              </tooltip.TooltipContent>
+            </tooltip.Tooltip>
           </li>
 
           <li>
-            <Link href={appConfig.URLS.app.services?.weather ?? "#"}>
-              {t("powered")}{" "}
-              {appConfig.APP.services?.weather ?? "[weather service]"}
-            </Link>
+            <link.Link href={appConfig.URLS.app.services?.weather ?? "#"}>
+              {t("powered", { service: appConfig.APP.services?.weather ?? "[weather service]" })}
+            </link.Link>
           </li>
         </ul>
 
-        <ul className="flex items-center gap-5">
+        <ul className="flex flex-row justify-center items-center gap-3 md:gap-5 w-full md:w-auto text-center md:text-right">
           <li>
-            <IconLink
+            <link.IconLink
               href={appConfig.URLS.app.repo || "#"}
               icon={<Github size={16} />}
             >
               Github
-            </IconLink>
+            </link.IconLink>
           </li>
 
           <li>
             <Badge>v{appConfig.APP.version}</Badge>
           </li>
         </ul>
+
+        {!isDesktop && appConfig.APP.author && (
+          <div className="flex w-full justify-center text-xs opacity-70">
+            <span className="mr-2">&copy; 2025</span>
+            <a>{appConfig.APP.author}</a>
+          </div>
+        )}
       </div>
     </footer>
   );

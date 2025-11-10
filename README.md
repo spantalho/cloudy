@@ -1,68 +1,180 @@
-# ☁️ cloudy. — Weather Forecast
+[![!banner](./public/banner.png)](#)
 
-Website de previsão do tempo simples e open-source, realizado com **React** e **shadcn/ui**. Este repositório fornece apenas o **front-end** — é fundamental ter um **back-end próprio** configurado para fornecer os dados de clima e geolocalização.
+<h1 style="font-family: unbounded; font-size:35px; letter-spacing:-1.5px; font-weight:800" align="center">☁️ Cloudy: weather forecast</h1>
 
-## Config.
+[![License](https://img.shields.io/badge/License-Apache%202.0-white?style=flat-square&logo=apache)](./LICENSE.txt)
+[![Vite](https://img.shields.io/badge/Bundler-Vite-blue?style=flat-square&logo=vite)](#)
+[![Status](https://img.shields.io/badge/Status-Prototype-black?style=flat-square)](#)
 
-O projeto consome endpoints REST para previsão e busca de localidades.\
-Você precisará configurar seu próprio back-end com tais rotas:
+Cloudy is a modern weather forecast website built with **React**, **TypeScript**, and **shadcn/ui**. This repository contains only the frontend; you'll need to set up your own backend to provide weather and geolocation data.
 
-| Método | Endpoint           | Funções                                | Obrigatório |
-| ------ | ------------------ | -------------------------------------- | ----------- |
-| get    | `/weather/current` | Dados atuais de clima                  | ✅          |
-| get    | `/forecast`        | Previsão de clima estendida            | ✅          |
-| get    | `/search/`         | Busca de cidades/localizações          | ✅          |
-| get    | `/search/ip`       | Detecção de localização via IP/lat/lon | 🔁 Opcional |
-| post   | `/session/start`   | Token de sessão (anônima)              | ✅          |
+## Demo / Screenshot
 
-### APIs recomendadas
+[![!screenshot](./public/showcase/screenshot.png)](#)
 
-- Weather: [WeatherAPI ->]()
-- Geolocalização [IPInfo.co (IP) ->]()
+## Features
 
-> 💡 Você pode usar qualquer serviço, desde que mantenha o formato esperado pelas rotas acima.
+- Interactive charts for temperature, precipitation, humidity, and UV index
+- Detailed forecast with highs, lows, and rain/snow probability
+- Highly configurable via [config.json](./public/config.json)
+- Light/dark theme support with real-time automatic detection
 
-## Executar
-
-1. **Clone o repositório**
+## Installation
 
 ```bash
-git clone https://github.com/spantalho/cloudy.git
+$ git clone https://github.com/spantalho/cloudy.git
+$ cd cloudy
+$ yarn install
 ```
 
-2. **Instale as dependências**
+## Configuration
+
+1. Create a `.env` file in the project root:
+
+```env
+VITE_SITE_URL=https://really-cool-weather-site.com
+
+VITE_APP_NAME=app name
+VITE_APP_ENV=development
+
+VITE_API_BASE_URL=https://ur-api.example.com
+```
+
+2. (Opcional) Adjust settings in `public/config.json`
+
+```json
+{
+  "FEATURES": {
+    "functionality": {
+      "location_auto_detect": true,
+      "theme_auto_detect": true
+    }
+  }
+}
+```
+
+3. Start the development server:
 
 ```bash
-yarn install
+yarn dev
 ```
 
-3. **Implemente e configure o arquivo `.env`**
+## API Contract
+
+The back-end must implement the following endpoints:
+
+### Essential Endpoints
+
+| Method | Endpoint                                      | Description                     |
+| ------ | --------------------------------------------- | ------------------------------- |
+| `GET`  | `/weather/current?city=<name>`                | Returns current weather         |
+| `GET`  | `/forecast?city=<name>&days=<n>&hours=<bool>` | Returns forecast                |
+| `GET`  | `/search?q=<query>`                           | Search cities                   |
+| `GET`  | `/search/ip`                                  | IP-based geolocation (optional) |
+
+### Response Examples
+
+**`/weather/current`**
+
+```json
+{
+  "location": {
+    "name": "São Paulo",
+    "tzId": "America/Sao_Paulo",
+    "lat": -23.55,
+    "lon": -46.63
+  },
+  "current": {
+    "lastUpdated": "2025-11-10 15:00",
+    "temp": { "c": 25.4, "f": 40 },
+    "condition": {
+      "text": "Partly cloudy",
+      "code": 1003
+    }
+  }
+}
+```
+
+> Complete examples for this and other endpoints are available in `/src/mocks/`
+
+## Usage Examples (CURL)
 
 ```bash
-# your back-end url
-VITE_API_BASE_URL=http://localhost:3000
+
+# Current weather
+curl "$VITE_API_BASE_URL/weather/current?city=Rio%20de%20Janeiro"
+
+# 7-day forecast
+curl "$VITE_API_BASE_URL/forecast?city=Rio%20de%20Janeiro&days=7&hours=false"
+
+# Search city
+curl "$VITE_API_BASE_URL/search?q=Rio"
+
 ```
 
-## Scripts
+## Configuration
 
-| Commands       | Função                               |
-| -------------- | ------------------------------------ |
-| `yarn dev`     | Inicia o ambiente de desenvolvimento |
-| `yarn build`   | Gera build de produção               |
-| `yarn preview` | Visualiza a build localmente         |
-| `lint`         | ...                                  |
+### Environment Variables
 
-## Licença
+| Variable              | Values                                     | Description               |
+| --------------------- | ------------------------------------------ | ------------------------- |
+| `VITE_APP_ENV`        | `development` \| `staging` \| `production` | Application environment   |
+| `VITE_API_BASE_URL`   | URL                                        | API base URL              |
+| `VITE_APP_NAME`       | STRING                                     | APP name                  |
+| `VITE_APP_SHORT_NAME` | STRING                                     | APP short name (optional) |
 
-Distribuído sob a licença © **Apache 2.0**\
-Veja o arquivo [LICENSE ->](./LICENSE.txt) para mais detalhes.
+💡 **Tip**: Create separate files like `.env.development` and `.env.production`
 
-## Contribuições
+### config.json Options
 
-Contribuições são bem vindas!\
-Abra uma _issue_ para sugestões, bugs ou melhorias!
+```json
+{
+  "FEATURES": {
+    "functionality": {
+      "location_auto_detect": true, // Automatically detects location
+      "theme_auto_detect": true // Applies system theme
+    }
+  },
+  "CONSTANTS": {
+    "cache_duration": 300000, // Cache in ms (5min)
+    "request_timeout": 10000, // Request timeout
+    "default_location": "Rio de Janeiro"
+  }
+}
+```
 
-### Localizações
+## Debug / Troubleshooting
 
-- 🇧🇷 [Português ->](/src/i18n/locales/pt/translation.json)
-- 🇺🇲 [English ->](/src/i18n/locales/en/translation.json)
+| Problem                 | Tip                                                 |
+| ----------------------- | --------------------------------------------------- |
+| **401/403**             | Check session/authentication on backend             |
+| **CORS**                | Configure CORS on backend to accept frontend origin |
+| **Undefined data**      | Confirm API responses follow the expected contract  |
+| **Geolocation failure** | Disable `location_auto_detect` in `config.json`     |
+
+## Contributing
+
+Contributions are welcome! For significant changes:
+
+1. Open an issue describing your proposal
+2. Fork the project
+3. Create a branch (`git checkout -b feature/MyFeature`)
+4. Commit your changes (`git commit -m 'Add MyFeature'`)
+5. Push to the branch (`git push origin feature/MyFeature`)
+6. Open a PR
+
+## License
+
+This project is licensed under the [Apache License 2.0](./LICENSE.txt). You are free to use, modify, and distribute this software, as long as you maintain the copyright notices.
+
+# Credits
+
+Banner photography by **[Liza B](https://unsplash.com/pt-br/@clupeonella)** under the [Unsplash License](https://unsplash.com/license) and Logo by **Lisandra**. Weather data from **[WeatherAPI](https://www.weatherapi.com/)**.
+
+Inspired by modern UI stacks and public weather APIs.
+
+---
+
+<div style="font-family: unbounded; font-size:16px; letter-spacing:-0.5px" align="center">
+☁️ Cloudy
+</div>

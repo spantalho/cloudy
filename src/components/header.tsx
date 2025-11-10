@@ -1,50 +1,64 @@
-import { motion } from "framer-motion";
-import { useTheme } from "@/hooks/use-theme";
 import { useConfig } from "@/contexts/config-context";
+import { Separator } from "./ui/separator";
+import { motion } from "framer-motion"
+import Settings from "./settings";
+import { useTheme } from "@/hooks/use-theme";
+import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 export default function Header() {
-  const { theme } = useTheme();
   const { appConfig } = useConfig();
+  const { theme } = useTheme();
+  const { t } = useTranslation()
+
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
-    <header className="flex flex-col items-center justify-between gap-5 w-full my-15 max-w-2xl md:max-w-3xl md:max-h-3xl lg:max-w-4xl md:h-[130px] md:flex-row md:items-top md:my-35">
-      <div className="relative flex justify-center items-center w-full h-[100px] md:h-[130px]">
+    <header className={`${isDesktop ? "top-3" : "bottom-3"} z-50 fixed flex w-full items-center max-w-[95vw] md:max-w-3xl lg:max-w-4xl justify-between bg-accent/70 backdrop-blur-2xl shadow rounded-full border border-border text-xs py-2 px-4 ease-in-out`}
+
+    >
+      <div className="pointer-events-none flex gap-4 items-center">
         <motion.img
-          src="/icon_light.png"
-          alt="Cloudy Light logo"
-          className="absolute pointer-events-none scale-60 max-h-[160px] md:scale-100"
+          aria-hidden
+          className="absolute h-[2.5em]"
+          src="/logo_light.png"
+          alt=""
           animate={{
-            opacity: theme === "dark" ? 0 : 1,
+            opacity: theme === "dark" ? 0 : 1
           }}
           transition={{
             duration: 0.2,
-            ease: "easeInOut",
+            ease: "easeInOut"
           }}
         />
         <motion.img
-          src="/icon_dark.png"
-          alt="Cloudy Dark logo"
-          className="absolute pointer-events-none scale-60 max-h-[160px] md:scale-100"
+          aria-hidden
+          className="absolute h-[2.5em]"
+          src="/logo_dark.png"
+          alt=""
           animate={{
-            opacity: theme === "dark" ? 1 : 0,
+            opacity: theme === "light" ? 0 : 1
           }}
           transition={{
             duration: 0.2,
-            ease: "easeInOut",
+            ease: "easeInOut"
           }}
         />
+
+        <h1 className="ml-16 font-semibold text-lg font-unbounded tracking-tighter">
+          {appConfig.APP.name}
+        </h1>
       </div>
-      <div className="pointer-events-none flex w-full items-center justify-center md:justify-start md:items-top md:p-5 rounded-bl-lg md:border-b md:border-l">
-        <div className="flex flex-col gap-5 justify-between items-center text-center md:text-start md:items-start">
-          <h1 className="font-unbounded text-4xl tracking-tighter font-bold md:text-5xl lg:text-6xl">
-            {appConfig.APP.name}.
-          </h1>
-          <p className="font-medium text-primary/90 text-sm w-auto">
-            Um website de{" "}
-            <span className="font-unbounded">previsão do tempo</span>. Bem
-            simples & open-source.
-          </p>
-        </div>
+      <div className="flex items-center">
+        <Settings />
+        {isDesktop && <Separator className="mx-3 h-6!" orientation="vertical" />}
+        {isDesktop && (
+          <nav className="flex gap-4 items-center capitalize">
+            <a href="#current">{t("nav.current")}</a>
+            <a href="#forecast">{t("nav.forecast")}</a>
+            <a href="#chart">{t("nav.chart")}</a>
+          </nav>
+        )}
       </div>
     </header>
   );

@@ -18,17 +18,71 @@ interface CityContextType {
 
 const CityContext = createContext<CityContextType | undefined>(undefined);
 
+const NODE_ENV = import.meta.env.NODE_ENV as "development" | "staging" | "production"
+
+const GEO_KEY = "geo"
+const GEO_TTL = 1000 * 60 * 60 * 24;
+
+function isLocalStorageAvailable(): boolean {
+  try {
+    return typeof window !== "undefined" && typeof window.localStorage !== "undefined" && window.localStorage !== null;
+  } catch {
+    return false
+  }
+}
+
+function getGeoFromStorage(): string | null {
+  if (!isLocalStorageAvailable()) return null;
+
+  try {
+    const raw = localStorage.getItem(GEO_KEY)
+    if (!raw) return null;
+
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === "object" && "id" in parsed && "ts" in parsed) {
+      const age = Date.now() - Number((parsed as any).ts);
+      if (age < GEO_TTL) {
+        return String((parsed as any).id)
+      } else {
+        localStorage.removeItem(GEO_KEY);
+        return null;
+      }
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function setGeoInStorage(id: string | number) {
+
+  if (!isLocalStorageAvailable() && NODE_ENV !== "production") {
+    console.debug("[CityProvider] localStorage not available, skipping geo cache write");
+    return
+  }
+  try {
+    localStorage.setItem(GEO_KEY, JSON.stringify(({ id: String(id), ts: Date.now() })))
+    console.debug("[CityProvider] geo cached", id)
+  } catch (err) {
+    console.debug("[CityProvider] failed to write geo cache:", err)
+  }
+}
+
 export function CityProvider({ children }: { children: ReactNode }) {
 
   const initialCity = (() => {
     const sessionCity = getSession("city");
     if (sessionCity) return sessionCity;
-    try {
-      const geo = localStorage.getItem("geo");
-      if (geo) return `id:${geo}`;
-    } catch (err) {
-      // SSR or blocked access
-    }
+
+    const geoId = (() => {
+      try {
+        return getGeoFromStorage()
+      } catch {
+        return null;
+      }
+    })();
+
+    if (geoId) return `id:${geoId}`
 
     // fallback
     return "Rio de Janeiro";
@@ -40,12 +94,14 @@ export function CityProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       setSession("city", city);
-    } catch (err) {}
+    } catch (err) {
+      // ignore
+    }
   }, [city]);
 
   const hasGeoCache = (() => {
     try {
-      return Boolean(localStorage.getItem("geo"));
+      return getGeoFromStorage() !== null;
     } catch {
       return false;
     }
@@ -54,8 +110,8 @@ export function CityProvider({ children }: { children: ReactNode }) {
   const { data, isSuccess, isError } = useQuery({
     queryKey: ["geoLocation"],
     queryFn: () => fetchSearchByIp(),
-    staleTime: 1000 * 60 * 60 * 24, // 24h
-    gcTime: 1000 * 60 * 60 * 24,
+    staleTime: GEO_TTL,
+    gcTime: GEO_TTL,
     refetchOnWindowFocus: false,
     enabled: !hasGeoCache,
   });
@@ -67,9 +123,7 @@ export function CityProvider({ children }: { children: ReactNode }) {
         (res && res.results?.[0].id) ?? (res && res.detected?.id) ?? null;
 
       if (id) {
-        try {
-          localStorage.setItem("geo", String(id));
-        } catch {}
+        setGeoInStorage(id)
         const newCity = `id:${id}`;
         if (city !== newCity) {
           setCity(newCity);
@@ -86,7 +140,7 @@ export function CityProvider({ children }: { children: ReactNode }) {
       setCity("Rio de Janeiro");
       setGeoDetected(false);
     }
-  }, [isSuccess, isError, data, setCity, city]);
+  }, [isSuccess, isError, data]);
 
   return (
     <CityContext.Provider

@@ -1,28 +1,35 @@
 {
-  "license_disclaimer": "Este projeto é licenciado sob a Apache License 2.0, permitindo o uso, modificação e redistribuição — com ou sem fins lucrativos — desde que os avisos de licença originais sejam mantidos. Algumas bibliotecas e APIs de terceiros são utilizadas e permanecem sob suas respectivas licenças; consulte seus repositórios ou sites oficiais para mais informações.",
-  "powered": "Dados de",
+  "license_disclaimer": "Algumas bibliotecas e APIs de terceiros são utilizadas e permanecem sob suas respectivas licenças; consulte seus repositórios ou sites oficiais para mais informações.",
+  "build_disclaimer": "Esta é uma compilação de {{build}} e não representa a versão final do produto.",
+  "powered": "Dados de {{service}}",
   "search_placeholder": "Buscar cidade...",
-  "read": "Saiba mais",
   "localtime": "Horário local",
-  "now": "Agora",
-  "temp": "Temperatura",
-  "speed": "Velocidade",
-  "wind": "Vento",
-  "humidity": "Umidade",
-  "last_update": "Última atualização",
-  "feels_like": "Sensação",
-  "cloudy": "Encoberto",
-  "avg": "Média",
-  "min": "Mínima",
-  "max": "Máxima",
-  "prob": "Probabilidade",
-  "rain": "Chuva",
-  "uv": "Índice UV",
-  "uv_full": "Raios Ultravioleta",
-  "mph": "Milhas por hora",
-  "kmh": "Quilômetro por hora",
+  "weather": {
+    "humidity": "Umidade",
+    "wind": "Vento",
+    "cloudy": "Encoberto",
+    "rain": "Chuva",
+    "snow": "Neve",
+    "feels_like": "Sensação",
+    "uv": "Índice UV",
+    "uv_full": "Raios Ultravioleta"
+  },
+  "nav": {
+    "chart": "Gráficos",
+    "current": "Agora",
+    "forecast": "Próximos Dias"
+  },
   "common": {
-    "system": "Sistema"
+    "read_more": "Saiba mais",
+    "system": "Sistema",
+    "temp": "Temperatura",
+    "speed": "Velocidade",
+    "avg": "Média",
+    "min": "Mínima",
+    "max": "Máxima",
+    "prob": "Probabilidade",
+    "mph": "Milhas por hora",
+    "kmh": "Quilômetro por hora"
   },
   "uv_index": {
     "low": "Baixo",
@@ -32,6 +39,9 @@
     "extreme": "Extremo"
   },
   "titles": {
+    "current": {
+      "title": "Clima atual em"
+    },
     "forecast": {
       "title": "Próximos Dias",
       "description": "Exibindo previsão para os próximos {{days}} dias"
@@ -43,6 +53,7 @@
     },
     "chart": {
       "rain": "Chance de Chuva",
+      "snow": "Chance de Neve",
       "desc": "Exibindo {{hours}} horas"
     }
   },
@@ -54,18 +65,31 @@
     "later": "Por favor, tente novamente mais tarde"
   },
   "settings": {
-    "theme": {
-      "btn": "Alterar Tema"
+    "label": "Configurações",
+    "description": "Ajuste suas preferências. Suas escolhas serão salvas automáticamente.",
+    "titles": {
+      "unit": "Unidades",
+      "interface": "Interface",
+      "advanced": "Avançado"
     },
-    "unit": {
-      "btn": "Unidades",
-      "label": "Configurações de Unidades"
-    },
-    "lng": {
-      "btn": "Idiomas",
-      "label": "Configurações de Idiomas",
-      "pt": "Português, Brasil",
-      "en": "Inglês"
+    "options": {
+      "unit": {
+        "temp": "Temperatura",
+        "speed": "Velocidade",
+        "mph": "Milhas por hora",
+        "kmh": "Quilômetro por hora"
+      },
+      "interface": {
+        "animations": "Animações",
+        "languages": "Idiomas",
+        "theme": "Temas"
+      },
+      "advanced": {
+        "notifications": "Notificações no App"
+      },
+      "brief": {
+        "notifications": "A desativação dessa opção também ocultará os avisos de falha."
+      }
     }
   }
 }

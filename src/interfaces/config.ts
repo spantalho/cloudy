@@ -35,7 +35,6 @@ export interface AppConfig {
       location_auto_detect: boolean;
       lang_auto_detect: boolean;
       theme_auto_detect: boolean;
-      multiple_locations: boolean;
     };
   };
   CONSTANTS: {

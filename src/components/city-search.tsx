@@ -97,7 +97,7 @@ export default function CitySearch(ready: { ready: boolean }) {
       ref={containerRef}
       className="relative w-full max-w-2xl md:max-w-3xl lg:max-w-4xl grid gap-2 mb-5 md:gap-3"
     >
-      <InputGroup className="transition-colors">
+      <InputGroup className="transition-colors border shadow dark:border-0">
         <InputGroupInput
           ref={inputRef}
           placeholder={t("search_placeholder")}
@@ -127,7 +127,7 @@ export default function CitySearch(ready: { ready: boolean }) {
               <CardTitle className="w-full flex justify-between">
                 <div className="font-unbounded font-normal tracking-tight inline-flex flex-col gap-2 md:gap-1 md:flex-row">
                   {t("titles.search.title")}{" "}
-                  <span className="font-bold">{query.toLowerCase()}</span>
+                  <span className="font-bold tracking-tighter">{query.toLowerCase()}</span>
                 </div>
                 <div className="absolute right-8">
                   <Button
@@ -148,7 +148,7 @@ export default function CitySearch(ready: { ready: boolean }) {
                 <Item
                   key={`${_cityObj.id}-${_cityObj.name}`}
                   onClick={() => handleSelectCity(_cityObj.id)}
-                  className="cursor-pointer my-2 first:mt-2.5 last:mb-2.5 hover:bg-accent"
+                  className="bg-background cursor-pointer my-2 first:mt-2.5 last:mb-2.5 hover:bg-accent/30"
                   variant={"outline"}
                 >
                   <ItemContent>

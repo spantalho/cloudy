@@ -1,10 +1,9 @@
 import {
-  defaultAppConfig,
-  defaultPreferences,
+  minimalFallback,
+  minimalPreferences,
 } from "@/constants/config-defaults";
 import type {
   AppConfig,
-  FullConfig,
   UserPreferences,
 } from "@/interfaces/config";
 
@@ -12,9 +11,18 @@ import i18n from "@/i18n";
 
 class ConfigService {
   private config: AppConfig | null = null;
+  private defaultPreferences: UserPreferences | null = null;
 
-  async loadConfig(): Promise<AppConfig> {
-    if (this.config) return this.config;
+  async loadConfig(): Promise<{
+    appConfig: AppConfig;
+    defaultPreferences: UserPreferences;
+  }> {
+    if (this.config && this.defaultPreferences) {
+      return {
+        appConfig: this.config,
+        defaultPreferences: this.defaultPreferences,
+      };
+    }
 
     try {
       const response = await fetch("/config.json");
@@ -25,82 +33,101 @@ class ConfigService {
           /\{VITE_APP_ENV}/g,
           import.meta.env.VITE_APP_ENV || "development"
         )
-        .replace(/\{VITE_API_URL}/g, import.meta.env.VITE_API_URL || "");
+        .replace(/\{VITE_API_URL}/g, import.meta.env.VITE_API_URL || "")
+        .replace(/\{VITE_APP_NAME}/g, import.meta.env.VITE_APP_NAME || "cloudy")
+        .replace(
+          /\{VITE_APP_SHORT_NAME}/g,
+          import.meta.env.VITE_APP_SHORT_NAME || import.meta.env.VITE_APP_NAME
+        );
 
       const parsedConfig = JSON.parse(processedConfig);
-      this.config = this.mergeWithDefaults(parsedConfig);
-      return this.config;
+
+      this.config = this.mergeWithFallback(parsedConfig.appConfig);
+      this.defaultPreferences = this.mergePreferences(
+        parsedConfig.defaultPreferences
+      );
+
+      return {
+        appConfig: this.config,
+        defaultPreferences: this.defaultPreferences,
+      };
     } catch (err) {
-      console.warn("Failed to load custom config, using defaults:", err);
-      return this.getDefaultConfig().appConfig;
+      console.warn("Failed to load config.json, using minimal fallback:", err);
+      this.config = minimalFallback;
+      this.defaultPreferences = minimalPreferences;
+      return {
+        appConfig: this.config,
+        defaultPreferences: this.defaultPreferences,
+      };
     }
   }
 
-  private mergeWithDefaults(loadedConfig: Partial<FullConfig>): AppConfig {
+  private mergeWithFallback(loadedConfig: Partial<AppConfig>): AppConfig {
     return {
-      ...defaultAppConfig,
-      ...loadedConfig.appConfig,
+      ...minimalFallback,
+      ...loadedConfig,
       APP: {
-        ...defaultAppConfig.APP,
-        ...loadedConfig.appConfig?.APP,
+        ...minimalFallback.APP,
+        ...loadedConfig.APP,
       },
       URLS: {
-        ...defaultAppConfig.URLS,
-        ...loadedConfig.appConfig?.URLS,
+        ...minimalFallback.URLS,
+        ...loadedConfig.URLS,
         internal: {
-          ...defaultAppConfig.URLS.internal,
-          ...loadedConfig.appConfig?.URLS?.internal,
+          ...minimalFallback.URLS.internal,
+          ...loadedConfig.URLS?.internal,
         },
         app: {
-          ...defaultAppConfig.URLS.app,
-          ...loadedConfig.appConfig?.URLS?.app,
+          ...minimalFallback.URLS.app,
+          ...loadedConfig.URLS?.app,
         },
       },
       FEATURES: {
-        ...defaultAppConfig.FEATURES,
-        ...loadedConfig.appConfig?.FEATURES,
+        ...minimalFallback.FEATURES,
+        ...loadedConfig.FEATURES,
         ui: {
-          ...defaultAppConfig.FEATURES.ui,
-          ...loadedConfig.appConfig?.FEATURES?.ui,
+          ...minimalFallback.FEATURES.ui,
+          ...loadedConfig.FEATURES?.ui,
         },
         functionality: {
-          ...defaultAppConfig.FEATURES.functionality,
-          ...loadedConfig.appConfig?.FEATURES?.functionality,
+          ...minimalFallback.FEATURES.functionality,
+          ...loadedConfig.FEATURES?.functionality,
         },
       },
       CONSTANTS: {
-        ...defaultAppConfig.CONSTANTS,
-        ...loadedConfig.appConfig?.CONSTANTS,
+        ...minimalFallback.CONSTANTS,
+        ...loadedConfig.CONSTANTS,
       },
     };
   }
 
-  private getDefaultConfig(): FullConfig {
-    const env = import.meta.env.VITE_APP_ENV || "development";
-
+  private mergePreferences(
+    loadedPrefs: Partial<UserPreferences>
+  ): UserPreferences {
     return {
-      appConfig: {
-        ...defaultAppConfig,
-        ENV: env as "development" | "staging" | "production",
+      ...minimalPreferences,
+      ...loadedPrefs,
+      units: {
+        ...minimalPreferences.units,
+        ...loadedPrefs.units,
       },
-      defaultPreferences: {
-        ...defaultPreferences,
-      },
-      updatePreferences: () => {},
-      resetPreferences: () => {},
     };
   }
 
   async loadUserPreferences(): Promise<UserPreferences> {
+    if (!this.defaultPreferences) {
+      await this.loadConfig();
+    }
+
     try {
       const stored = localStorage.getItem("userPreferences");
       if (stored) {
         const parsed: UserPreferences = JSON.parse(stored);
         return {
-          ...defaultPreferences,
+          ...this.defaultPreferences!,
           ...parsed,
           units: {
-            ...defaultPreferences.units,
+            ...this.defaultPreferences!.units,
             ...parsed.units,
           },
         };
@@ -109,7 +136,7 @@ class ConfigService {
       console.warn("Invalid userPreferences in localStorage:", err);
     }
 
-    return { ...defaultPreferences };
+    return { ...this.defaultPreferences! };
   }
 
   saveUserPreferences(preferences: UserPreferences): void {
@@ -126,14 +153,16 @@ export class ConfigManager {
   private service: ConfigService;
   private appConfig: AppConfig;
   private userPreferences: UserPreferences;
+  private defaultPreferences: UserPreferences;
   private loading: boolean;
   private error: string | null;
   private initialized: boolean = false;
 
   private constructor() {
     this.service = new ConfigService();
-    this.appConfig = defaultAppConfig;
-    this.userPreferences = defaultPreferences;
+    this.appConfig = minimalFallback;
+    this.userPreferences = minimalPreferences;
+    this.defaultPreferences = minimalPreferences;
     this.loading = true;
     this.error = null;
   }
@@ -158,17 +187,16 @@ export class ConfigManager {
     if (this.initialized) return;
 
     try {
-      const [loadedAppConfig, loadedUserPreferences] = await Promise.all([
-        this.service.loadConfig(),
-        this.service.loadUserPreferences(),
-      ]);
+      const { appConfig, defaultPreferences } = await this.service.loadConfig();
+      this.appConfig = appConfig;
+      this.defaultPreferences = defaultPreferences;
 
-      this.appConfig = loadedAppConfig;
+      const loadedUserPreferences = await this.service.loadUserPreferences();
       this.userPreferences = loadedUserPreferences;
 
       this.ensurePreferencesPersisted();
       this.applyLanguage(this.userPreferences);
-      
+
       this.initialized = true;
     } catch (err) {
       console.error("Failed to initialize config:", err);
@@ -197,10 +225,10 @@ export class ConfigManager {
       } else {
         const storedPrefs: UserPreferences = JSON.parse(stored);
         const mergedPrefs = {
-          ...defaultPreferences,
+          ...this.defaultPreferences,
           ...storedPrefs,
           units: {
-            ...defaultPreferences.units,
+            ...this.defaultPreferences.units,
             ...storedPrefs.units,
           },
         };

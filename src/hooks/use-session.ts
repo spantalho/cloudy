@@ -1,70 +1,82 @@
-import api from "@/api";
-import { useCallback, useRef, useState } from "react";
+import { sessionManager } from "@/managers/session-manager";
+import { useCallback, useEffect, useState } from "react";
 
-interface sessionType {
+interface SessionData {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
 }
 
 export function useSession() {
-  const [state, setState] = useState<sessionType>({
+  const [state, setState] = useState<SessionData>({
     isAuthenticated: false,
-    isLoading: false,
+    isLoading: true,
     error: null,
   });
 
-  const ensureSessionRef = useRef<Promise<void> | null>(null);
-
   const ensureSession = useCallback(async (): Promise<boolean> => {
     try {
-      if (ensureSessionRef.current) {
-        await ensureSessionRef.current;
-        return true;
-      }
+      setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
-      ensureSessionRef.current = (async () => {
-        try {
-          setState((prev) => ({ ...prev, isLoading: true, error: null }));
+      const success = await sessionManager.ensureSession();
 
-          await api.post("/session/start");
+      setState({
+        isAuthenticated: success,
+        isLoading: false,
+        error: success ? null : "Failed to start session.",
+      });
 
-          setState({
-            isAuthenticated: true,
-            isLoading: false,
-            error: null,
-          });
-        } catch (error) {
-          setState({
-            isAuthenticated: false,
-            isLoading: false,
-            error: "Failed to start session",
-          });
-          throw error;
-        }
-      })();
+      return success;
+    } catch (err: any) {
+      const errorMsg =
+        err.response?.status === 429
+          ? "Too many attempts, please try again later"
+          : "Failed to start session";
 
-      await ensureSessionRef.current;
-      return true;
-    } finally {
-      ensureSessionRef.current = null;
+      setState({
+        isAuthenticated: false,
+        isLoading: false,
+        error: errorMsg,
+      });
+      return false;
     }
   }, []);
 
-  const checkExistingSession = useCallback(async () => {
-    try {
-      await api.get("/health");
-      setState({
-        isAuthenticated: true,
+  useEffect(() => {
+    const unsubscribe = sessionManager.subscribe((initialized) => {
+      setState((prev) => ({
+        ...prev,
+        isAuthenticated: initialized,
         isLoading: false,
-        error: null,
+        error: initialized ? null : prev.error,
+      }));
+    });
+
+    setState((prev) => ({
+      ...prev,
+      isAuthenticated: sessionManager.getSessionStatus(),
+    }));
+
+    return unsubscribe;
+  }, []);
+
+  const renewSession = useCallback(async (): Promise<boolean> => {
+    try {
+      setState((prev) => ({ ...prev, isLoading: true, error: null }));
+      const success = await sessionManager.renewSession();
+
+      setState({
+        isAuthenticated: success,
+        isLoading: false,
+        error: success ? null : "Failed to renew session",
       });
-      return true;
+
+      return success;
     } catch (err) {
       setState({
         isAuthenticated: false,
         isLoading: false,
-        error: "Failed to check session",
+        error: "Failed to renew session",
       });
       return false;
     }
@@ -73,6 +85,6 @@ export function useSession() {
   return {
     ...state,
     ensureSession,
-    checkExistingSession,
+    renewSession,
   };
 }

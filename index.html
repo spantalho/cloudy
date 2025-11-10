@@ -4,26 +4,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Previsão do tempo simples e open-source — confira temperatura, horas e dias para sua cidade." />
-  <meta name="keywords" content="Weather, Forecast, open-source" />
-  <meta name="referrer" content="no-referrer-when-downgrade" />
 
-  <link rel="canonical" href="https://spantalho.github.io/cloudy">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:site_name" content="Cloudy">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Cloudy" />
-  <meta property="og:description" content="Previsão do tempo simples e open-source — confira temperatura, horas e dias para sua cidade.">
-  <meta property="og:url" content="https://spantalho.github.io/cloudy" />
-  <meta property="og:image" content="https://spantalho.github.io/cloudy/icon_dark.png" />
-  <meta property="twitter:card" content="summary">
-  <meta property="twitter:title" content="Cloudy — Weather forecast">
-  <meta property="twitter:description" content="Previsão do tempo simples e open-source — confira temperatura, horas e dias para sua cidade.">
-  <meta property="twitter:image" content="http://localhost:5173/favicon.png">
-
-  <title>Cloudy — Weather forecast</title>
   <link rel="icon" href="/favicon.png" />
   <link rel="manifest" href="/manifest.json" />
+
+  <title>Cloudy — Weather Forecast</title>
+  <meta name="title" content="<%- siteName %> — Weather Forecast" />
+
+  <meta name="description" content="Open-source weather forecasts. View current conditions, hourly charts, and your city's daily forecast." />
+  <meta name="keywords" content="Weather, Forecast, open-source, Temperature, Humidity, Wind" />
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <link rel="canonical" href="<%- siteUrl %>">
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="<%- siteName %> ">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="<%- siteName %>  — Weather Forecast" />
+  <meta property="og:description" content="Open-source weather forecasts. View current conditions, hourly charts, and your city's daily forecast.">
+  <meta property="og:url" content="<%- siteUrl %>" />
+  <meta property="og:image" content="<%- siteUrl %>/favicon.png" />
+  <meta property="og:banner" content="<%- siteUrl %>/banner.png"/>
+
+  <meta property="twitter:url" content="<%- siteUrl %>" />
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="<%- siteName %>  — Weather Forecast">
+  <meta property="twitter:description" content="Open-source weather forecasts. View current conditions, hourly charts, and your city's daily forecast.">
+  <meta property="twitter:image" content="<%- siteUrl %>/banner.png">
 
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
@@ -36,9 +44,9 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "Cloudy",
-      "url": "https://spantalho.github.io/cloudy",
-      "description": "Previsão do tempo simples e open-source"
+      "name": "<%- siteName %> ",
+      "url": "<%- siteUrl %>",
+      "description": "Open-source weather forecasts. View current conditions, hourly charts, and your city's daily forecast."
     }
   </script>
 </head>

@@ -1,29 +1,21 @@
-import { Card, CardContent } from "../ui/card";
+import * as card from "../ui/card";
 import { useEffect, useState } from "react";
-import { CloudRain, Droplets, ThermometerSun, Wind } from "lucide-react";
-import { fetchForecast } from "@/services/forecast-service";
+import * as lucideReact from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCity } from "@/contexts/city-context";
 import { useTranslation } from "react-i18next";
-import {
-  type CarouselApi,
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import * as carousel from "@/components/ui/carousel";
 
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { useQuery } from "@tanstack/react-query";
 
 import type { ModelDay } from "@/interfaces";
 import { useUnit } from "@/hooks/use-unit";
 import { useConfig } from "@/contexts/config-context";
+import { useForecast } from "@/hooks/services/use-forecast";
 
 export default function ForecastSummaryCard() {
   const [forecast, setForecast] = useState<ModelDay | undefined>();
-  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [carouselApi, setCarouselApi] = useState<carousel.CarouselApi>();
   const [current, setCurrent] = useState<number>(0);
   const [count, setCount] = useState<number>(0);
 
@@ -34,10 +26,12 @@ export default function ForecastSummaryCard() {
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["forecast", appConfig, city, false, 1],
-    queryFn: () => fetchForecast(city, appConfig, false, 1),
-  });
+  const { data, isLoading, isError, error } = useForecast(
+    city,
+    appConfig,
+    false,
+    1
+  );
 
   useEffect(() => {
     if (!data) return;
@@ -69,25 +63,25 @@ export default function ForecastSummaryCard() {
 
   return (
     <div className={`flex flex-col items-center ${isDesktop ? "" : "my-10"}`}>
-      <Carousel
+      <carousel.Carousel
         setApi={setCarouselApi}
         opts={{ align: "start" }}
         className="transition-colors w-full"
         orientation={`${isDesktop ? "horizontal" : "vertical"}`}
       >
-        <CarouselContent className="cursor-grab h-[200px]">
-          <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-            <Card className="transition-colors">
-              <CardContent className="h-[125px] flex flex-col gap-2 items-center">
-                <ThermometerSun
+        <carousel.CarouselContent className="cursor-grab h-[200px]">
+          <carousel.CarouselItem className="md:basis-1/2 lg:basis-1/3">
+            <card.Card className="transition-colors">
+              <card.CardContent className="h-[125px] flex flex-col gap-2 items-center">
+                <lucideReact.ThermometerSun
                   size={38}
-                  className="w-10 h-10 text-primary/70"
+                  className="w-10 h-10 text-muted"
                 />
-                <p>{t("temp")}</p>
-                <ul className="flex w-full justify-around text-xs text-primary/70">
-                  <li>{t("avg")}</li>
-                  <li>{t("max")}</li>
-                  <li>{t("min")}</li>
+                <p>{t("common.temp")}</p>
+                <ul className="flex w-full justify-around text-xs text-muted">
+                  <li>{t("common.avg")}</li>
+                  <li>{t("common.max")}</li>
+                  <li>{t("common.min")}</li>
                 </ul>
                 <ul className="flex w-full justify-around text-nowrap text-sm">
                   <li>
@@ -115,56 +109,55 @@ export default function ForecastSummaryCard() {
                     °
                   </li>
                 </ul>
-              </CardContent>
-            </Card>
-          </CarouselItem>
-          <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-            <Card className="transition-colors">
-              <CardContent className="h-[125px] flex flex-col gap-2 items-center">
-                <CloudRain size={38} className="text-primary/70" />
-                <p>{t("rain")}</p>
-                <span className=" text-xs text-primary/70">{t("prob")}</span>
+              </card.CardContent>
+            </card.Card>
+          </carousel.CarouselItem>
+          <carousel.CarouselItem className="md:basis-1/2 lg:basis-1/3">
+            <card.Card className="transition-colors">
+              <card.CardContent className="h-[125px] flex flex-col gap-2 items-center">
+                <lucideReact.CloudRain size={38} className="text-muted" />
+                <p>{t("weather.rain")}</p>
+                <span className=" text-xs text-muted">{t("common.prob")}</span>
                 <span className="text-sm">{forecast.chanceOfRain}%</span>
-              </CardContent>
-            </Card>
-          </CarouselItem>
-          <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-            <Card className="transition-colors">
-              <CardContent className="h-[125px] flex flex-col gap-2 items-center">
-                <Droplets size={38} className="w-10 h-10 text-primary/70" />
-                <p>{t("humidity")}</p>
-                <span className=" text-xs text-primary/70">{t("avg")}</span>
+              </card.CardContent>
+            </card.Card>
+          </carousel.CarouselItem>
+          <carousel.CarouselItem className="md:basis-1/2 lg:basis-1/3">
+            <card.Card className="transition-colors">
+              <card.CardContent className="h-[125px] flex flex-col gap-2 items-center">
+                <lucideReact.Droplets size={38} className="w-10 h-10 text-muted" />
+                <p>{t("weather.humidity")}</p>
+                <span className=" text-xs text-muted">{t("common.avg")}</span>
                 <span className="text-sm">{forecast.humidity}%</span>
-              </CardContent>
-            </Card>
-          </CarouselItem>
-          <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-            <Card className="transition-colors">
-              <CardContent className="h-[125px] flex flex-col gap-2 items-center">
-                <Wind className="w-10 h-10 text-primary/70" />
-                <p>{t("wind")}</p>
-                <span className="text-xs text-primary/70">{t("max")}</span>
+              </card.CardContent>
+            </card.Card>
+          </carousel.CarouselItem>
+          <carousel.CarouselItem className="md:basis-1/2 lg:basis-1/3">
+            <card.Card className="transition-colors">
+              <card.CardContent className="h-[125px] flex flex-col gap-2 items-center">
+                <lucideReact.Wind className="w-10 h-10 text-muted" />
+                <p>{t("weather.wind")}</p>
+                <span className="text-xs text-muted">{t("common.max")}</span>
                 <span className="text-sm">
                   {speedUnit === "kmh"
                     ? forecast.maxWind.kph
                     : forecast.maxWind.mph}{" "}
                   {speedUnit === "kmh" ? "km/h" : speedUnit}
                 </span>
-              </CardContent>
-            </Card>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious className={`${isDesktop ? "" : "-top-12"}`} />
-        <CarouselNext className={`${isDesktop ? "" : "-bottom-10"}`} />
-      </Carousel>
+              </card.CardContent>
+            </card.Card>
+          </carousel.CarouselItem>
+        </carousel.CarouselContent>
+        <carousel.CarouselPrevious className={`${isDesktop ? "" : "-top-12"}`} />
+        <carousel.CarouselNext className={`${isDesktop ? "" : "-bottom-10"}`} />
+      </carousel.Carousel>
       {current && count && isDesktop && (
         <div className="-mt-1.5 flex gap-1">
           {Array.from({ length: count }).map((_, i) => (
             <span
               key={i}
-              className={`delay-300 transition-all p-1 rounded-full ${
-                current === i + 1 ? "px-2 bg-primary/70" : "bg-primary/30"
-              }`}
+              className={`delay-300 transition-all p-1 rounded-full ${current === i + 1 ? "px-2 bg-primary/70" : "bg-primary/30"
+                }`}
             />
           ))}
         </div>

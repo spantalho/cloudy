@@ -1,28 +1,35 @@
 {
-  "license_disclaimer": "This project is licensed under the Apache License 2.0, which premits use, modification, and redistribution—both commercial and non-commercial—provided the original copyright notices are retained. Some third-party libraries and APIs are utilized and remain governed by their respective licenses; please refer to their official repositories or websites for futher information.",
-  "powered": "Powered by",
+  "license_disclaimer": "Some third-party libraries and APIs are utilized and remain governed by their respective licenses; please refer to their official repositories or websites for futher information.",
+  "build_disclaimer": "This is a {{build}} build and is not representative of a final product version.",
+  "powered": "Powered by {{service}}",
   "search_placeholder": "Search city...",
-  "read": "Read more",
   "localtime": "Local time",
-  "now": "Now",
-  "temp": "Temperature",
-  "speed": "Speed",
-  "wind": "Wind",
-  "humidity": "Humidity",
-  "last_update": "Last updated",
-  "feels_like": "Feels Like",
-  "cloudy": "Cloudy",
-  "avg": "Average",
-  "min": "Minimum",
-  "max": "Maximum",
-  "prob": "Probability",
-  "rain": "Rain",
-  "uv": "UV index",
-  "uv_full": "Ultraviolet Radiation",
-  "mph": "Miles per hour",
-  "kmh": "Kilometer per hour",
+  "weather": {
+    "humidity": "Humidity",
+    "wind": "Wind",
+    "cloudy": "Cloudy",
+    "rain": "Rain",
+    "snow": "Snow",
+    "feels_like": "Feels Like",
+    "uv": "UV index",
+    "uv_full": "Ultraviolet Radiation"
+  },
+  "nav": {
+    "chart": "Charts",
+    "current": "Now",
+    "forecast": "Next Days"
+  },
   "common": {
-    "system": "System"
+    "read_more": "Read more",
+    "system": "System",
+    "temp": "Temperature",
+    "speed": "Speed",
+    "avg": "Average",
+    "min": "Minimum",
+    "max": "Maximum",
+    "prob": "Probability",
+    "mph": "Miles per hour",
+    "kmh": "Kilometer per hour"
   },
   "uv_index": {
     "low": "Low",
@@ -32,6 +39,9 @@
     "extreme": "Extreme"
   },
   "titles": {
+    "current": {
+      "title": "Current weather in"
+    },
     "forecast": {
       "title": "Next Days",
       "description": "Showing forecast for the next {{days}} days"
@@ -43,6 +53,7 @@
     },
     "chart": {
       "rain": "Rain Chance",
+      "snow": "Snow Chance",
       "desc": "Displaying {{hours}} hours"
     }
   },
@@ -54,18 +65,31 @@
     "later": "Please try again later"
   },
   "settings": {
-    "theme": {
-      "btn": "Change Theme"
+    "label": "Settings",
+    "description": "Adjust your preferences. Your choices will be saved automatically.",
+    "titles": {
+      "unit": "Unit",
+      "interface": "Interface",
+      "advanced": "Advanced"
     },
-    "unit": {
-      "btn": "Unit",
-      "label": "Unit Settings"
-    },
-    "lng": {
-      "btn": "Language",
-      "label": "Language Settings",
-      "pt": "Portuguese, Brazil",
-      "en": "English"
+    "options": {
+      "unit": {
+        "temp": "Temperature",
+        "speed": "Speed",
+        "mph": "Miles per hour",
+        "kmh": "Kilometer per hour"
+      },
+      "interface": {
+        "animations": "Animations",
+        "languages": "Languages",
+        "theme": "Themes"
+      },
+      "advanced": {
+        "notifications": "In-App Notifications"
+      },
+      "brief": {
+        "notifications": "Disabling this option will also hide failure warnings."
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
-import api from "../api";
 import { ApiSearchSchema } from "./schema/search";
 import { mapApiSearchToModel } from "./mappers";
 import type { AppConfig } from "@/interfaces/config";
+import { apiWrapper } from "./api-wrapper";
 
 export async function fetchSearch(
   query: string,
@@ -10,14 +10,17 @@ export async function fetchSearch(
 ) {
   if (!query.trim()) return [];
 
-  const res = await api.get(`${appConfig.URLS.internal.api_base}/search`, {
-    params: {
-      query,
-      lang: lang || "en",
-    },
-  });
+  const res = await apiWrapper.get(
+    `${appConfig.URLS.internal.api_base}/search`,
+    {
+      params: {
+        query,
+        lang: lang || "en",
+      },
+    }
+  );
 
-  const parse = ApiSearchSchema.safeParse(res.data);
+  const parse = ApiSearchSchema.safeParse(res);
   if (!parse.success) {
     console.error("Invalid search API response", parse.error);
     throw new Error("Invalid search API response");
@@ -26,7 +29,8 @@ export async function fetchSearch(
   return mapApiSearchToModel(parse.data);
 }
 
-export async function fetchSearchByIp() {
-  const res = await api.get(`/api/search/ip`);
-  return res.data;
+export async function fetchSearchByIp(appConfig?: AppConfig) {
+  const API_BASE = appConfig ? appConfig.URLS.internal.api_base : "/api";
+  const res = await apiWrapper.get(`${API_BASE}/search/ip`);
+  return res;
 }

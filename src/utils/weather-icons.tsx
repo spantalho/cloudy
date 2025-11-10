@@ -59,6 +59,11 @@ const weatherCodeMap: Record<
   1150: ({ size, className }) => (
     <CloudDrizzle size={size} className={className} />
   ),
+
+  1153: ({ size, className }) => (
+    <CloudDrizzle size={size} className={className} />
+  ),
+
   1189: ({ size, className }) => (
     <CloudDrizzle size={size} className={className} />
   ),

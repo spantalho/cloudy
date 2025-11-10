@@ -10,6 +10,10 @@ if (!parsed.success) {
   throw new Error("INVALID API URL!");
 }
 
+const NODE_ENV = import.meta.env.NODE_ENV as
+  | "development"
+  | "staging"
+  | "production";
 const BASE_URL = parsed.data;
 
 const api = axios.create({
@@ -18,23 +22,21 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
   withCredentials: true,
+  timeout: 35000,
 });
-
-// api.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem("session_token");
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (err) => {
-//     return Promise.reject(err);
-//   }
-// );
 
 api.interceptors.request.use(
   (config) => {
+    config.withCredentials = true;
+
+    if (NODE_ENV !== "production") {
+      console.log("Request config:", {
+        url: config.url,
+        withCredentials: config.withCredentials,
+        headers: config.headers,
+      });
+    }
+
     return config;
   },
   (err) => {
@@ -43,19 +45,25 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    if (error.response?.status === 401) {
-      console.warn("Session expired, redirecting to refresh...");
-      try {
-        await api.post("/session/start");
-        return api.request(error.config);
-      } catch (refreshErr) {
-        console.warn("Could not refresh session");
-        throw refreshErr;
-      }
+  (response) => {
+    if (NODE_ENV !== "production") {
+      console.log("← Response:", {
+        url: response.config.url,
+        status: response.status,
+      });
     }
-    return Promise.reject(error);
+    return response;
+  },
+  async (err) => {
+    if (NODE_ENV !== "production") {
+      console.error("API Error:", {
+        url: err.config?.url,
+        status: err.response.status,
+        message: err.message,
+      });
+    }
+
+    return Promise.reject(err);
   }
 );
 

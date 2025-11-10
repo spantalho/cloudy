@@ -1,24 +1,25 @@
 import type { AppConfig, UserPreferences } from "@/interfaces/config";
 
-export const defaultAppConfig: AppConfig = {
+// fallback for config.json
+export const minimalFallback: AppConfig = {
   ENV: "production",
   APP: {
-    version: "0.1.0",
-    name: "cloudy",
-    short_name: "CLDY",
-    author: "Lou",
-    license: "CC0 1.0"
+    version: "0.0.0",
+    name: "Weather App",
+    short_name: "Weather",
+    author: "Unknown",
+    license: "Apache 2.0"
   },
   URLS: {
     app: {
-      repo: "https://github.com/spantalho/cloudy",
-      license: "https://creativecommons.org/publicdomain/zero/1.0/",
-      author_github: "https://github.com/spantalho",
+      repo: "",
+      license: "",
+      author_github: "",
     },
     resources: {
-      weather_education: "https://wmo.int",
+      weather_education: "",
       uv_guide:
-        "https://www.who.int/news-room/questions-and-answers/item/radiation-the-ultraviolet-(uv)-index",
+        "",
     },
     internal: {
       api_base: "/api",
@@ -30,10 +31,9 @@ export const defaultAppConfig: AppConfig = {
       experimental: false,
     },
     functionality: {
-      location_auto_detect: true,
-      lang_auto_detect: true,
-      theme_auto_detect: true,
-      multiple_locations: false,
+      location_auto_detect: false,
+      lang_auto_detect: false,
+      theme_auto_detect: false,
     },
   },
   CONSTANTS: {
@@ -43,7 +43,7 @@ export const defaultAppConfig: AppConfig = {
   },
 };
 
-export const defaultPreferences: UserPreferences = {
+export const minimalPreferences: UserPreferences = {
   units: {
     temperature: "celsius",
     speed: "kmh",

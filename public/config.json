@@ -3,8 +3,8 @@
     "ENV": "{VITE_APP_ENV}",
     "APP": {
       "version": "0.1.0",
-      "name": "cloudy",
-      "short_name": "CLDY",
+      "name": "{VITE_APP_NAME}",
+      "short_name": "{VITE_APP_SHORT_NAME}",
       "author": "Luis Gustavo R.C.",
       "license": "Apache 2.0",
       "services": {
@@ -36,8 +36,7 @@
       "functionality": {
         "location_auto_detect": true,
         "lang_auto_detect": true,
-        "theme_auto_detect": true,
-        "multiple_locations": false
+        "theme_auto_detect": true
       }
     },
     "CONSTANTS": {

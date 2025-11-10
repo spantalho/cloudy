@@ -3,12 +3,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme, type Theme } from "@/hooks/use-theme";
 import { useHotkeys } from "react-hotkeys-hook";
-import { useCallback, useState } from "react";
+import { useCallback, useState, type JSX } from "react";
 import { Monitor, Moon, Sun } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Kbd } from "./ui/kbd";
 
-export default function ThemeToggler() {
+export default function ThemeToggler(): JSX.Element {
   const { theme, setTheme, systemTheme } = useTheme();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
@@ -38,9 +38,9 @@ export default function ThemeToggler() {
 
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <motion.div
-          className="flex gap-2 rounded-lg border shadow-sm"
+          className="flex gap-2 rounded-lg border bg-input/30 shadow-sm"
           onMouseEnter={() => setIsExpanded(true)}
           onMouseLeave={() => setIsExpanded(false)}
           animate={{ width: isExpanded ? "auto" : "fit-content" }}
@@ -101,8 +101,8 @@ export default function ThemeToggler() {
       </TooltipTrigger>
       <TooltipContent>
         <div className="flex items-center">
-          <p>{t("settings.theme.btn")} </p>
-          <Kbd className="ml-2 bg-accent! text-primary! border">Alt+T</Kbd>
+          <p>Change Theme</p>
+          <Kbd className="ml-2 bg-primary! text-primary-foreground! border">Alt+T</Kbd>
         </div>
       </TooltipContent>
     </Tooltip>

@@ -1,4 +1,4 @@
-import { ConfigManager } from "@/config-manager";
+import { ConfigManager } from "@/managers/config-manager";
 import type {
   AppConfig,
   ConfigContextType,
