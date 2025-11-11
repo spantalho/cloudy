@@ -1,16 +1,16 @@
 [![!banner](./public/banner.png)](#)
 
-<h1 style="font-family: unbounded; font-size:35px; letter-spacing:-1.5px; font-weight:800" align="center">☁️ Cloudy: weather forecast</h1>
+<h1 align="center">☁️ Cloudy: weather forecast</h1>
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-white?style=flat-square&logo=apache)](./LICENSE.txt)
 [![Vite](https://img.shields.io/badge/Bundler-Vite-blue?style=flat-square&logo=vite)](#)
 [![Status](https://img.shields.io/badge/Status-Prototype-black?style=flat-square)](#)
 
-Cloudy is a modern weather forecast website built with **React**, **TypeScript**, and **shadcn/ui**. This repository contains only the frontend; you'll need to set up your own backend to provide weather and geolocation data.
+Cloudy is a modern weather forecast website built with **React**, **TypeScript**, and **shadcn/ui**. This repository contains only the front-end; you'll need to set up your own back-end to provide weather and geolocation data.
 
-## Demo / Screenshot
-
-[![!screenshot](./public/showcase/screenshot.png)](#)
+## Demo
+[![!screenshot1](./public/showcase/screenshot_light.png)](#)
+[![!screenshot1](./public/showcase/screenshot_dark.png)](#)
 
 ## Features
 
@@ -34,7 +34,7 @@ $ yarn install
 ```env
 VITE_SITE_URL=https://really-cool-weather-site.com
 
-VITE_APP_NAME=app name
+VITE_APP_NAME=Weather Website
 VITE_APP_ENV=development
 
 VITE_API_BASE_URL=https://ur-api.example.com
@@ -131,13 +131,13 @@ curl "$VITE_API_BASE_URL/search?q=Rio"
 {
   "FEATURES": {
     "functionality": {
-      "location_auto_detect": true, // Automatically detects location
-      "theme_auto_detect": true // Applies system theme
+      "location_auto_detect": true,
+      "theme_auto_detect": true
     }
   },
   "CONSTANTS": {
-    "cache_duration": 300000, // Cache in ms (5min)
-    "request_timeout": 10000, // Request timeout
+    "cache_duration": 300000,
+    "request_timeout": 180000,
     "default_location": "Rio de Janeiro"
   }
 }
@@ -145,12 +145,12 @@ curl "$VITE_API_BASE_URL/search?q=Rio"
 
 ## Debug / Troubleshooting
 
-| Problem                 | Tip                                                 |
-| ----------------------- | --------------------------------------------------- |
-| **401/403**             | Check session/authentication on backend             |
-| **CORS**                | Configure CORS on backend to accept frontend origin |
-| **Undefined data**      | Confirm API responses follow the expected contract  |
-| **Geolocation failure** | Disable `location_auto_detect` in `config.json`     |
+| Problem             | Tip                                                 |
+| ------------------- | --------------------------------------------------- |
+| 401/403             | Check session/authentication on backend             |
+| CORS                | Configure CORS on backend to accept frontend origin |
+| Undefined data      | Confirm API responses follow the expected contract  |
+| Geolocation failure | Disable `location_auto_detect` in `config.json`     |
 
 ## Contributing
 
@@ -175,6 +175,6 @@ Inspired by modern UI stacks and public weather APIs.
 
 ---
 
-<div style="font-family: unbounded; font-size:16px; letter-spacing:-0.5px" align="center">
+<div align="center">
 ☁️ Cloudy
 </div>

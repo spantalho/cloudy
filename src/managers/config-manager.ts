@@ -34,7 +34,7 @@ class ConfigService {
           import.meta.env.VITE_APP_ENV || "development"
         )
         .replace(/\{VITE_API_URL}/g, import.meta.env.VITE_API_URL || "")
-        .replace(/\{VITE_APP_NAME}/g, import.meta.env.VITE_APP_NAME || "cloudy")
+        .replace(/\{VITE_APP_NAME}/g, import.meta.env.VITE_APP_NAME || "weather website")
         .replace(
           /\{VITE_APP_SHORT_NAME}/g,
           import.meta.env.VITE_APP_SHORT_NAME || import.meta.env.VITE_APP_NAME

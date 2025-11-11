@@ -15,8 +15,6 @@ import { useConfig } from "@/contexts/config-context";
 import { useForecast } from "@/hooks/services/use-forecast";
 import * as tabs from "../ui/tabs";
 
-// TODO: alterar os botões de mudança de gráfico para TABS!
-
 export default function ForecastChartCard() {
   const [hours, setHours] = useState<ModelHour[]>([]);
 

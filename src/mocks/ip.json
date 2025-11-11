@@ -1,0 +1,16 @@
+{
+  "detected": {
+    "city": "Tokyo",
+    "region": "Tokyo",
+    "lat": -22.9,
+    "lon": -43.23
+  },
+  "results": {
+    "id": 4,
+    "name": "Tokyo",
+    "region": "Tokyo",
+    "country": "Japan",
+    "lat": 35.69,
+    "lon": 139.69
+  }
+}

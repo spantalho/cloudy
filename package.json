@@ -1,5 +1,6 @@
 {
   "name": "cloudy",
+  "homepage": "https://cloudy.spantalho.dev/",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -7,7 +8,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [
     "typescript",
@@ -17,7 +19,7 @@
     "weather",
     "forecast"
   ],
-  "author": "Luis Gustavo R.C. <lookey.dev@gmail.com>",
+  "author": "Luis Gustavo R.C.",
   "license": "Apache-2.0",
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
@@ -67,6 +69,7 @@
     "eslint": "^9.36.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "gh-pages": "^6.3.0",
     "globals": "^16.4.0",
     "tw-animate-css": "^1.3.8",
     "typescript": "~5.8.3",
@@ -80,6 +83,5 @@
   },
   "bugs": {
     "url": "https://github.com/spantalho/cloudy/issues"
-  },
-  "homepage": "https://github.com/spantalho/cloudy#readme"
+  }
 }

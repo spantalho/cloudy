@@ -1,5 +1,8 @@
+import { ConfigManager } from "@/managers/config-manager";
 import axios from "axios";
 import { z } from "zod";
+
+const configManager = ConfigManager.getInstance() 
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3380/";
 
@@ -22,7 +25,9 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
   withCredentials: true,
-  timeout: 35000,
+  get timeout() {
+    return configManager.getState().appConfig?.CONSTANTS?.request_timeout || 180000;
+  }
 });
 
 api.interceptors.request.use(
