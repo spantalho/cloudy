@@ -1,0 +1,58 @@
+{
+  "appConfig": {
+    "ENV": "{VITE_APP_ENV}",
+    "APP": {
+      "version": "0.1.0",
+      "name": "{VITE_APP_NAME}",
+      "short_name": "{VITE_APP_SHORT_NAME}",
+      "author": "Luis Gustavo R.C.",
+      "license": "Apache 2.0",
+      "services": {
+        "weather": "WeatherAPI"
+      }
+    },
+    "URLS": {
+      "app": {
+        "repo": "https://github.com/spantalho/cloudy",
+        "author_github": "https://github.com/spantalho",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "services": {
+          "weather": "https://www.weatherapi.com/"
+        }
+      },
+      "resources": {
+        "weather_education": "https://wmo.int",
+        "uv_guide": "https://www.who.int/news-room/questions-and-answers/item/radiation-the-ultraviolet-(uv)-index"
+      },
+      "internal": {
+        "api_base": "/api",
+        "assets": "/assets"
+      }
+    },
+    "FEATURES": {
+      "ui": {
+        "experimental": false
+      },
+      "functionality": {
+        "location_auto_detect": true,
+        "lang_auto_detect": true,
+        "theme_auto_detect": true
+      }
+    },
+    "CONSTANTS": {
+      "cache_duration": 300000,
+      "request_timeout": 180000,
+      "default_location": "Rio de Janeiro"
+    }
+  },
+  "defaultPreferences": {
+    "units": {
+      "temperature": "celsius",
+      "speed": "kmh"
+    },
+    "theme": "system",
+    "lang": "system",
+    "notifications": true,
+    "animations": true
+  }
+}
