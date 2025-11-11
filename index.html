@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" href="<%- siteUrl %>/favicon.png" />
+  <link rel="manifest" href="<%- siteUrl %>/manifest.json" />
+
+  <title><%- siteName %> — Weather Forecast</title>
+  <meta name="title" content="<%- siteName %> — Weather Forecast" />
+
+  <meta name="description" content="Open-source weather forecasts. View current conditions, hourly charts, and your city's daily forecast." />
+  <meta name="keywords" content="Weather, Forecast, open-source, Temperature, Humidity, Wind" />
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <link rel="canonical" href="<%- siteUrl %>">
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="<%- siteName %> ">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="<%- siteName %>  — Weather Forecast" />
+  <meta property="og:description" content="Open-source weather forecasts. View current conditions, hourly charts, and your city's daily forecast.">
+  <meta property="og:url" content="<%- siteUrl %>" />
+  <meta property="og:image" content="<%- siteUrl %>/favicon.png" />
+  <meta property="og:banner" content="<%- siteUrl %>/banner.png"/>
+
+  <meta property="twitter:url" content="<%- siteUrl %>" />
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="<%- siteName %>  — Weather Forecast">
+  <meta property="twitter:description" content="Open-source weather forecasts. View current conditions, hourly charts, and your city's daily forecast.">
+  <meta property="twitter:image" content="<%- siteUrl %>/banner.png">
+
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
+
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link name="apple-touch-icon" href="/apple-touch-icon.png" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "<%- siteName %> ",
+      "url": "<%- siteUrl %>",
+      "description": "Open-source weather forecasts. View current conditions, hourly charts, and your city's daily forecast."
+    }
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>

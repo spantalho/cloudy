@@ -1,0 +1,665 @@
+{
+  "location": {
+    "name": "Tokyo",
+    "region": "Tokyo",
+    "country": "Japan",
+    "tz_id": "Asia/Tokyo",
+    "localtime": {
+      "localtime": "2025-11-11 11:21",
+      "epoch": 1762827661
+    }
+  },
+  "forecast": [
+    {
+      "date": "2025-11-11",
+      "date_epoch": 1762819200,
+      "humidity": 43,
+      "will_rain": false,
+      "will_snow": false,
+      "chance_of_rain": 0,
+      "chance_of_snow": 0,
+      "max_wind": {
+        "kph": 23,
+        "mph": 14.3
+      },
+      "temp": {
+        "max_c": 16.5,
+        "min_c": 12.3,
+        "avg_c": 14.1,
+        "max_f": 61.7,
+        "min_f": 54.2,
+        "avg_f": 57.4
+      },
+      "condition": {
+        "text": "Partly Cloudy ",
+        "code": 1003
+      },
+      "hours": [
+        {
+          "time": "2025-11-11 00:00",
+          "time_epoch": 1762786800,
+          "humidity": 47,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 13.1,
+            "f": 55.5
+          },
+          "wind": {
+            "kph": 19.8,
+            "mph": 12.3
+          },
+          "condition": {
+            "text": "Clear ",
+            "code": 1000
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 01:00",
+          "time_epoch": 1762790400,
+          "humidity": 49,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 12.8,
+            "f": 55.1
+          },
+          "wind": {
+            "kph": 18.4,
+            "mph": 11.4
+          },
+          "condition": {
+            "text": "Clear ",
+            "code": 1000
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 02:00",
+          "time_epoch": 1762794000,
+          "humidity": 49,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 12.7,
+            "f": 54.8
+          },
+          "wind": {
+            "kph": 17.6,
+            "mph": 11
+          },
+          "condition": {
+            "text": "Clear ",
+            "code": 1000
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 03:00",
+          "time_epoch": 1762797600,
+          "humidity": 49,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 12.5,
+            "f": 54.5
+          },
+          "wind": {
+            "kph": 18,
+            "mph": 11.2
+          },
+          "condition": {
+            "text": "Clear ",
+            "code": 1000
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 04:00",
+          "time_epoch": 1762801200,
+          "humidity": 48,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 12.4,
+            "f": 54.4
+          },
+          "wind": {
+            "kph": 17.6,
+            "mph": 11
+          },
+          "condition": {
+            "text": "Clear ",
+            "code": 1000
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 05:00",
+          "time_epoch": 1762804800,
+          "humidity": 48,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 12.3,
+            "f": 54.2
+          },
+          "wind": {
+            "kph": 17.3,
+            "mph": 10.7
+          },
+          "condition": {
+            "text": "Clear ",
+            "code": 1000
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 06:00",
+          "time_epoch": 1762808400,
+          "humidity": 46,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 12.3,
+            "f": 54.2
+          },
+          "wind": {
+            "kph": 16.2,
+            "mph": 10.1
+          },
+          "condition": {
+            "text": "Clear ",
+            "code": 1000
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 07:00",
+          "time_epoch": 1762812000,
+          "humidity": 44,
+          "is_day": true,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 12.5,
+            "f": 54.5
+          },
+          "wind": {
+            "kph": 16.6,
+            "mph": 10.3
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 08:00",
+          "time_epoch": 1762815600,
+          "humidity": 43,
+          "is_day": true,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0.4,
+          "temp": {
+            "c": 12.9,
+            "f": 55.2
+          },
+          "wind": {
+            "kph": 20.2,
+            "mph": 12.5
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 09:00",
+          "time_epoch": 1762819200,
+          "humidity": 43,
+          "is_day": true,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0.8,
+          "temp": {
+            "c": 13.3,
+            "f": 55.9
+          },
+          "wind": {
+            "kph": 22,
+            "mph": 13.6
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 10:00",
+          "time_epoch": 1762822800,
+          "humidity": 40,
+          "is_day": true,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 1.5,
+          "temp": {
+            "c": 14,
+            "f": 57.2
+          },
+          "wind": {
+            "kph": 20.9,
+            "mph": 13
+          },
+          "condition": {
+            "text": "Cloudy ",
+            "code": 1006
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 11:00",
+          "time_epoch": 1762826400,
+          "humidity": 44,
+          "is_day": true,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 2.3,
+          "temp": {
+            "c": 15.1,
+            "f": 59.2
+          },
+          "wind": {
+            "kph": 17.3,
+            "mph": 10.7
+          },
+          "condition": {
+            "text": "Partly cloudy",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 12:00",
+          "time_epoch": 1762830000,
+          "humidity": 36,
+          "is_day": true,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 2.5,
+          "temp": {
+            "c": 15.6,
+            "f": 60.1
+          },
+          "wind": {
+            "kph": 13.3,
+            "mph": 8.3
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 13:00",
+          "time_epoch": 1762833600,
+          "humidity": 36,
+          "is_day": true,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 2.2,
+          "temp": {
+            "c": 16.1,
+            "f": 61
+          },
+          "wind": {
+            "kph": 10.1,
+            "mph": 6.3
+          },
+          "condition": {
+            "text": "Sunny",
+            "code": 1000
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 14:00",
+          "time_epoch": 1762837200,
+          "humidity": 35,
+          "is_day": true,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 1.5,
+          "temp": {
+            "c": 16.4,
+            "f": 61.5
+          },
+          "wind": {
+            "kph": 7.2,
+            "mph": 4.5
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 15:00",
+          "time_epoch": 1762840800,
+          "humidity": 35,
+          "is_day": true,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0.8,
+          "temp": {
+            "c": 16.5,
+            "f": 61.7
+          },
+          "wind": {
+            "kph": 6.8,
+            "mph": 4.3
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 16:00",
+          "time_epoch": 1762844400,
+          "humidity": 36,
+          "is_day": true,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0.2,
+          "temp": {
+            "c": 16.3,
+            "f": 61.4
+          },
+          "wind": {
+            "kph": 7.6,
+            "mph": 4.7
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 17:00",
+          "time_epoch": 1762848000,
+          "humidity": 39,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 15.8,
+            "f": 60.5
+          },
+          "wind": {
+            "kph": 7.9,
+            "mph": 4.9
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 18:00",
+          "time_epoch": 1762851600,
+          "humidity": 44,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 15.3,
+            "f": 59.6
+          },
+          "wind": {
+            "kph": 7.2,
+            "mph": 4.5
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 19:00",
+          "time_epoch": 1762855200,
+          "humidity": 45,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 15.1,
+            "f": 59.2
+          },
+          "wind": {
+            "kph": 4.7,
+            "mph": 2.9
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 20:00",
+          "time_epoch": 1762858800,
+          "humidity": 41,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 14.7,
+            "f": 58.4
+          },
+          "wind": {
+            "kph": 12.6,
+            "mph": 7.8
+          },
+          "condition": {
+            "text": "Clear ",
+            "code": 1000
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 21:00",
+          "time_epoch": 1762862400,
+          "humidity": 39,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 13.9,
+            "f": 57.1
+          },
+          "wind": {
+            "kph": 18.7,
+            "mph": 11.6
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 22:00",
+          "time_epoch": 1762866000,
+          "humidity": 45,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 13.5,
+            "f": 56.3
+          },
+          "wind": {
+            "kph": 21.6,
+            "mph": 13.4
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        },
+        {
+          "time": "2025-11-11 23:00",
+          "time_epoch": 1762869600,
+          "humidity": 48,
+          "is_day": false,
+          "chance_of_rain": 0,
+          "chance_of_snow": 0,
+          "uv": 0,
+          "temp": {
+            "c": 13.1,
+            "f": 55.6
+          },
+          "wind": {
+            "kph": 23,
+            "mph": 14.3
+          },
+          "condition": {
+            "text": "Partly Cloudy ",
+            "code": 1003
+          },
+          "precip": {
+            "mm": 0,
+            "in": 0
+          },
+          "snow_cm": 0
+        }
+      ]
+    }
+  ]
+}

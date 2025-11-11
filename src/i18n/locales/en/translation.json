@@ -1,0 +1,95 @@
+{
+  "license_disclaimer": "Some third-party libraries and APIs are utilized and remain governed by their respective licenses; please refer to their official repositories or websites for futher information.",
+  "build_disclaimer": "This is a {{build}} build and is not representative of a final product version.",
+  "powered": "Powered by {{service}}",
+  "search_placeholder": "Search city...",
+  "localtime": "Local time",
+  "weather": {
+    "humidity": "Humidity",
+    "wind": "Wind",
+    "cloudy": "Cloudy",
+    "rain": "Rain",
+    "snow": "Snow",
+    "feels_like": "Feels Like",
+    "uv": "UV index",
+    "uv_full": "Ultraviolet Radiation"
+  },
+  "nav": {
+    "chart": "Charts",
+    "current": "Now",
+    "forecast": "Next Days"
+  },
+  "common": {
+    "read_more": "Read more",
+    "system": "System",
+    "temp": "Temperature",
+    "speed": "Speed",
+    "avg": "Average",
+    "min": "Minimum",
+    "max": "Maximum",
+    "prob": "Probability",
+    "mph": "Miles per hour",
+    "kmh": "Kilometer per hour"
+  },
+  "uv_index": {
+    "low": "Low",
+    "moderate": "Moderate",
+    "high": "High",
+    "very_high": "Very High",
+    "extreme": "Extreme"
+  },
+  "titles": {
+    "current": {
+      "title": "Current weather in"
+    },
+    "forecast": {
+      "title": "Next Days",
+      "description": "Showing forecast for the next {{days}} days"
+    },
+    "search": {
+      "title": "Searches for",
+      "description": "Showing {{count}} result(s)",
+      "button": "Select"
+    },
+    "chart": {
+      "rain": "Rain Chance",
+      "snow": "Snow Chance",
+      "desc": "Displaying {{hours}} hours"
+    }
+  },
+  "connection": {
+    "in_progress": "Connecting...",
+    "done": "Connected!",
+    "error": "Error Connecting!",
+    "wait": "Wait a moment!",
+    "later": "Please try again later"
+  },
+  "settings": {
+    "label": "Settings",
+    "description": "Adjust your preferences. Your choices will be saved automatically.",
+    "titles": {
+      "unit": "Unit",
+      "interface": "Interface",
+      "advanced": "Advanced"
+    },
+    "options": {
+      "unit": {
+        "temp": "Temperature",
+        "speed": "Speed",
+        "mph": "Miles per hour",
+        "kmh": "Kilometer per hour"
+      },
+      "interface": {
+        "animations": "Animations",
+        "languages": "Languages",
+        "theme": "Themes"
+      },
+      "advanced": {
+        "notifications": "In-App Notifications"
+      },
+      "brief": {
+        "notifications": "Disabling this option will also hide failure warnings."
+      }
+    }
+  }
+}
