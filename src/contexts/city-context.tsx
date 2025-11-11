@@ -1,4 +1,5 @@
 import { getSession, setSession } from "@/lib/window-session";
+import { ConfigManager } from "@/managers/config-manager";
 import { fetchSearchByIp } from "@/services/search-service";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -16,12 +17,15 @@ interface CityContextType {
   setGeoDetected: (g: boolean) => void;
 }
 
+const configManager = ConfigManager.getInstance()
 const CityContext = createContext<CityContextType | undefined>(undefined);
 
 const NODE_ENV = import.meta.env.NODE_ENV as "development" | "staging" | "production"
 
 const GEO_KEY = "geo"
 const GEO_TTL = 1000 * 60 * 60 * 24;
+
+const DEFAULT_CITY = configManager.getState().appConfig.CONSTANTS?.default_location || "Rio de Janeiro"
 
 function isLocalStorageAvailable(): boolean {
   try {
@@ -85,7 +89,7 @@ export function CityProvider({ children }: { children: ReactNode }) {
     if (geoId) return `id:${geoId}`
 
     // fallback
-    return "Rio de Janeiro";
+    return DEFAULT_CITY;
   })();
 
   const [city, setCity] = useState<string>(initialCity);
@@ -132,12 +136,12 @@ export function CityProvider({ children }: { children: ReactNode }) {
           setCity(newCity);
         }
       } else {
-        setCity("Rio de Janeiro");
+        setCity(DEFAULT_CITY);
         setGeoDetected(false);
       }
     }
     if (isError) {
-      setCity("Rio de Janeiro");
+      setCity(DEFAULT_CITY);
       setGeoDetected(false);
     }
   }, [isSuccess, isError, data]);

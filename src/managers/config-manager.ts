@@ -2,10 +2,7 @@ import {
   minimalFallback,
   minimalPreferences,
 } from "@/constants/config-defaults";
-import type {
-  AppConfig,
-  UserPreferences,
-} from "@/interfaces/config";
+import type { AppConfig, UserPreferences } from "@/interfaces/config";
 
 import i18n from "@/i18n";
 
@@ -34,7 +31,10 @@ class ConfigService {
           import.meta.env.VITE_APP_ENV || "development"
         )
         .replace(/\{VITE_API_URL}/g, import.meta.env.VITE_API_URL || "")
-        .replace(/\{VITE_APP_NAME}/g, import.meta.env.VITE_APP_NAME || "weather website")
+        .replace(
+          /\{VITE_APP_NAME}/g,
+          import.meta.env.VITE_APP_NAME || "weather website"
+        )
         .replace(
           /\{VITE_APP_SHORT_NAME}/g,
           import.meta.env.VITE_APP_SHORT_NAME || import.meta.env.VITE_APP_NAME
@@ -263,7 +263,9 @@ export class ConfigManager {
 
     let langToApply: "pt" | "en";
 
-    if (preferences.lang === "system") {
+    if (!this.appConfig.FEATURES?.functionality?.lang_auto_detect) {
+      langToApply = "en";
+    } else if (preferences.lang === "system") {
       const browserLang = navigator.language.toLowerCase();
       langToApply = browserLang.startsWith("pt") ? "pt" : "en";
     } else {

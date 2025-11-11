@@ -5,10 +5,14 @@ import { useEffect, useMemo } from "react";
 export type LangType = "system" | "en" | "pt";
 
 export function useLang() {
-  const { userPreferences, setUserPreferences } = useConfig();
+  const { appConfig, userPreferences, setUserPreferences } = useConfig();
 
   const currentLang = useMemo(() => {
     if (typeof window === "undefined") return "en";
+
+    if (!appConfig.FEATURES?.functionality?.lang_auto_detect) {
+      return "en";
+    }
 
     if (userPreferences.lang === "system") {
       const browserLang = navigator.language.toLowerCase();

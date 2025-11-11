@@ -4,6 +4,7 @@ import { fetchForecast } from "@/services/forecast-service";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const configManager = ConfigManager.getInstance()
+const CACHE_DURATION = configManager.getState().appConfig?.CONSTANTS?.cache_duration || 300000;
 
 export function useForecast(
   city: string,
@@ -12,7 +13,6 @@ export function useForecast(
   days = 3
 ) {
   const API_BASE = appConfig.URLS.internal.api_base;
-  const CACHE_DURATION = configManager.getState().appConfig?.CONSTANTS?.cache_duration || 300000;
 
   return useQuery({
     queryKey: [

@@ -5,6 +5,7 @@ import { fetchWeather } from "@/services/weather-service";
 import { ConfigManager } from "@/managers/config-manager";
 
 const configManager = ConfigManager.getInstance()
+const CACHE_DURATION = configManager.getState().appConfig?.CONSTANTS?.cache_duration || 300000;
 
 export function useWeather(
   city: string,
@@ -12,7 +13,6 @@ export function useWeather(
   lang?: LangType
 ) {
   const API_BASE = appConfig.URLS.internal.api_base;
-  const CACHE_DURATION = configManager.getState().appConfig?.CONSTANTS?.cache_duration || 300000;
 
   return useQuery({
     queryKey: ["weather", API_BASE, city, lang || "en"],

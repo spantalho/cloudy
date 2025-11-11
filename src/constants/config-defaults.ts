@@ -38,7 +38,7 @@ export const minimalFallback: AppConfig = {
   },
   CONSTANTS: {
     cache_duration: 300000,
-    request_timeout: 10000,
+    request_timeout: 180000,
     default_location: "Rio de Janeiro",
   },
 };

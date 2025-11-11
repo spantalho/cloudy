@@ -9,7 +9,7 @@ import ForecastSummaryCard from "@/components/cards/forecast-summary-card";
 import WeatherCurrentCard from "@/components/cards/weather-current-card";
 import ForecastDaysCard from "@/components/cards/forecast-days-card";
 import ForecastChartCard from "@/components/cards/forecast-chart-card";
-import ConnectionWatcher from "@/features/toast/connection-watcher";
+import ConnectionWatcher from "@/components/connection-watcher";
 import CitySearch from "./components/city-search";
 import Footer from "./components/footer";
 import DebugCard from "./components/cards/debug-card";
