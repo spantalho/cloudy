@@ -13,7 +13,7 @@ import ConnectionWatcher from "@/components/connection-watcher";
 import CitySearch from "./components/city-search";
 import Footer from "./components/footer";
 import DebugCard from "./components/cards/debug-card";
-import Header from "./components/header";
+import Navigator from "./components/navigator";
 
 export default function App() {
   const { city } = useCity();
@@ -55,11 +55,11 @@ export default function App() {
   useEffect(() => {
     const disabled = userPreferences?.animations === false;
     if (disabled) {
-      document.documentElement.setAttribute("data-reduced-motion", "true")
+      document.documentElement.setAttribute("data-reduced-motion", "true");
     } else {
-      document.documentElement.removeAttribute("data-reduced-motion")
+      document.documentElement.removeAttribute("data-reduced-motion");
     }
-  }, [userPreferences?.animations])
+  }, [userPreferences?.animations]);
 
   const cards = [
     <WeatherCurrentCard key="current" />,
@@ -70,14 +70,8 @@ export default function App() {
 
   return (
     <main>
-      {userPreferences.notifications === true && (
-        <>
-          <Toaster expand={true} />
-          <ConnectionWatcher ready={sessionReady} error={sessionError} />
-        </>
-      )}
       <div className="transition-all flex flex-col md:pt-25 py-10 px-8 w-full min-h-screen justify-center items-center md:px-0">
-        <Header />
+        <Navigator />
         <HotkeysProvider>
           <CitySearch ready={sessionReady} />
         </HotkeysProvider>
@@ -106,6 +100,12 @@ export default function App() {
         </div>
       </div>
       <Footer />
+      {userPreferences.notifications === true && (
+        <>
+          <Toaster expand={true} />
+          <ConnectionWatcher ready={sessionReady} error={sessionError} />
+        </>
+      )}
     </main>
   );
 }

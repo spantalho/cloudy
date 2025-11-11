@@ -2,7 +2,7 @@
   "appConfig": {
     "ENV": "{VITE_APP_ENV}",
     "APP": {
-      "version": "0.1.0",
+      "version": "0.1.2",
       "name": "{VITE_APP_NAME}",
       "short_name": "{VITE_APP_SHORT_NAME}",
       "author": "Luis Gustavo R.C.",

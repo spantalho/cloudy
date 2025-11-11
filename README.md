@@ -1,4 +1,4 @@
-[![!banner](./public/banner.png)](#)
+[![!banner](./public/images/banner.png)](#)
 
 <h1 align="center">☁️ Cloudy: weather forecast</h1>
 
@@ -9,8 +9,8 @@
 Cloudy is a modern weather forecast website built with **React**, **TypeScript**, and **shadcn/ui**. This repository contains only the front-end; you'll need to set up your own back-end to provide weather and geolocation data.
 
 ## Demo
-[![!screenshot1](./public/showcase/screenshot_light.png)](#)
-[![!screenshot1](./public/showcase/screenshot_dark.png)](#)
+[![!screenshot1](./public/images/showcase/screenshot_light.png)](#)
+[![!screenshot1](./public/images/showcase/screenshot_dark.png)](#)
 
 ## Features
 

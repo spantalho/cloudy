@@ -1,4 +1,5 @@
 import { Spinner } from "@/components/ui/spinner";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import { AlertTriangle, Check } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,12 +17,16 @@ export default function ConnectionWatcher({
 
   const { t } = useTranslation();
 
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const POSITION = isDesktop ? "bottom-right" : "top-center"
+
   useEffect(() => {
     if (!ready && !connectingToast.current) {
       connectingToast.current = toast.warning(t("connection.in_progress"), {
         id: "connection",
         description: t("connection.wait"),
         icon: <Spinner />,
+        position: POSITION,
         duration: Infinity,
       });
     }
