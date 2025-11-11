@@ -1,0 +1,10 @@
+{
+  "short_name": "CLDY",
+  "name": "Cloudy",
+  "start_url": ".",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#0f172a",
+  "background_color": "#ffffff",
+  "lang": "en-US"
+}
