@@ -35,6 +35,9 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
+      - name: Create CNAME file
+        run: echo "cloudy.spantalho.dev" > ./dist/CNAME
+
       - name: Build app
         run: yarn build
         env:
