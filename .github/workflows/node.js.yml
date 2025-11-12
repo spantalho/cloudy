@@ -15,7 +15,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
@@ -35,9 +35,6 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      - name: Create CNAME file
-        run: echo "cloudy.spantalho.dev" > ./dist/CNAME
-
       - name: Build app
         run: yarn build
         env:
@@ -46,6 +43,9 @@ jobs:
           VITE_APP_SHORT_NAME: ${{ secrets.VITE_APP_SHORT_NAME }}
           VITE_APP_ENV: ${{ secrets.VITE_APP_ENV }}
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
+
+      - name: Create CNAME file
+        run: echo "cloudy.spantalho.dev" > ./dist/CNAME
 
       #- run: yarn test
 
