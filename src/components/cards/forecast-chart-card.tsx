@@ -111,10 +111,10 @@ export default function ForecastChartCard() {
   }
 
   return (
-    <card.Card id="chart" className="transition-colors bg-transparent">
+    <card.Card id="chart" className="transition-colors bg-transparent border-0">
       <tabs.Tabs defaultValue="temp" className="w-full">
         <card.CardFooter className="flex gap-5 mb-3">
-          <tabs.TabsList className="transition-colors flex gap-3 bg-transparent border hover:bg-accent/30">
+          <tabs.TabsList className="transition-colors shadow flex gap-3 bg-transparent border hover:bg-accent/30">
             <tabs.TabsTrigger
               value="temp"
               id="weatherTemp"
@@ -148,7 +148,7 @@ export default function ForecastChartCard() {
 
         <tabs.TabsContent value="temp" className="outline-none">
           <card.CardHeader>
-            <card.CardTitle className="flex items-center font-normal font-unbounded tracking-tight">
+            <card.CardTitle className="flex items-center text-xl tracking-tight">
               {chartConfig.temp.label.replace(/\s*\(.*?\)\s*/g, "").trim()}
             </card.CardTitle>
             <card.CardDescription>
@@ -158,14 +158,23 @@ export default function ForecastChartCard() {
 
           <card.CardContent className="mt-5">
             <chart.ChartContainer config={chartConfig} className="h-50 w-full">
-              <recharts.AreaChart accessibilityLayer data={chartData} margin={{ top: 10, right: 25 }}>
+              <recharts.LineChart accessibilityLayer data={chartData} margin={{ top: 10, right: 25 }}>
                 <recharts.CartesianGrid vertical={false} />
-                <recharts.XAxis dataKey="time" tickLine={false} tickMargin={8} axisLine={false} tickFormatter={(v) => v} />
-                <recharts.YAxis domain={["auto", "auto"]} />
+                <recharts.XAxis className="font-medium" dataKey="time" tickLine={false} tickMargin={8} axisLine={false} tickFormatter={(v) => v} />
+                <recharts.YAxis tickLine={false} axisLine={false} domain={["auto", "auto"]} />
                 <chart.ChartTooltip content={<chart.ChartTooltipContent indicator="line" />} />
-                <chart.ChartLegend content={<chart.ChartLegendContent />} />
-                <recharts.Area fillOpacity={0.4} stroke="var(--color-temp)" dataKey="temp" fill="var(--color-temp)" />
-              </recharts.AreaChart>
+                {/* <chart.ChartLegend content={<chart.ChartLegendContent />} /> */}
+                <recharts.Line
+                  type={"natural"}
+                  stroke="var(--color-temp)"
+                  dataKey="temp" dot={{
+                    fill: "var(--color-temp)",
+                  }}
+                  activeDot={{
+                    r: 6,
+                  }}
+                />
+              </recharts.LineChart>
             </chart.ChartContainer>
           </card.CardContent>
         </tabs.TabsContent>
@@ -188,10 +197,10 @@ export default function ForecastChartCard() {
                   <chart.ChartContainer config={chartConfig} className="h-50 w-full">
                     <recharts.BarChart accessibilityLayer data={chartData} margin={{ right: 25 }}>
                       <recharts.CartesianGrid vertical={true} />
-                      <recharts.XAxis dataKey="time" tickLine={false} tickMargin={8} axisLine={false} tickFormatter={(v) => v} />
-                      <recharts.YAxis domain={[0, 100]} />
+                      <recharts.XAxis className="font-medium" dataKey="time" tickLine={false} tickMargin={8} axisLine={false} tickFormatter={(v) => v} />
+                      <recharts.YAxis tickLine={false} axisLine={false} domain={[0, 100]} />
                       <chart.ChartTooltip content={<chart.ChartTooltipContent indicator="dot" />} />
-                      <chart.ChartLegend content={<chart.ChartLegendContent />} />
+                      {/* <chart.ChartLegend content={<chart.ChartLegendContent />} /> */}
                       <recharts.Bar
                         stroke={chartConfig[effectiveKey].color}
                         dataKey={effectiveKey}
@@ -221,10 +230,10 @@ export default function ForecastChartCard() {
             <chart.ChartContainer config={chartConfig} className="h-50 w-full">
               <recharts.AreaChart accessibilityLayer data={chartData} margin={{ right: 25 }}>
                 <recharts.CartesianGrid vertical={false} />
-                <recharts.XAxis dataKey="time" tickLine={false} tickMargin={8} axisLine={false} tickFormatter={(v) => v} />
-                <recharts.YAxis domain={["auto", "auto"]} />
+                <recharts.XAxis className="font-medium" dataKey="time" tickLine={false} tickMargin={8} axisLine={false} tickFormatter={(v) => v} />
+                <recharts.YAxis tickLine={false} axisLine={false} domain={["auto", "auto"]} />
                 <chart.ChartTooltip content={<chart.ChartTooltipContent indicator="line" />} />
-                <chart.ChartLegend content={<chart.ChartLegendContent />} />
+                {/* <chart.ChartLegend content={<chart.ChartLegendContent />} /> */}
                 <recharts.Area fillOpacity={0.4} stroke="var(--color-humidity)" dataKey="humidity" fill="var(--color-humidity)" />
               </recharts.AreaChart>
             </chart.ChartContainer>
@@ -267,10 +276,10 @@ export default function ForecastChartCard() {
             <chart.ChartContainer config={chartConfig} className="h-50 w-full">
               <recharts.BarChart accessibilityLayer data={chartData} margin={{ right: 25 }}>
                 <recharts.CartesianGrid vertical={true} />
-                <recharts.XAxis dataKey="time" tickLine={false} tickMargin={8} axisLine={false} tickFormatter={(v) => v} />
-                <recharts.YAxis domain={[0, 11]} />
+                <recharts.XAxis className="font-medium" dataKey="time" tickLine={false} tickMargin={8} axisLine={false} tickFormatter={(v) => v} />
+                <recharts.YAxis tickLine={false} axisLine={false} domain={[0, 11]} />
                 <chart.ChartTooltip content={<chart.ChartTooltipContent indicator="dot" />} />
-                <chart.ChartLegend content={<chart.ChartLegendContent />} />
+                {/* <chart.ChartLegend content={<chart.ChartLegendContent />} /> */}
                 <recharts.Bar stroke="var(--color-uv)" dataKey="uv" fill="var(--color-uv)" fillOpacity={0.4} radius={4} />
               </recharts.BarChart>
             </chart.ChartContainer>

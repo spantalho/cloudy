@@ -2,6 +2,7 @@ import type { AppConfig, UserPreferences } from "@/interfaces/config";
 
 // fallback for config.json
 export const minimalFallback: AppConfig = {
+  schemaVersion: 1,
   ENV: "production",
   APP: {
     version: "0.0.0",
@@ -44,12 +45,20 @@ export const minimalFallback: AppConfig = {
 };
 
 export const minimalPreferences: UserPreferences = {
+  schemaVersion: 1,
   units: {
     temperature: "celsius",
     speed: "kmh",
+  },
+  places: {
+    detected: null,
+    favorite: null,
+    history: null
   },
   lang: "system",
   theme: "system",
   notifications: true,
   animations: true,
+  shortcuts: true,
+  ui_experiments: true
 };

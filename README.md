@@ -152,26 +152,9 @@ curl "$VITE_API_BASE_URL/search?q=Rio"
 | Undefined data      | Confirm API responses follow the expected contract  |
 | Geolocation failure | Disable `location_auto_detect` in `config.json`     |
 
-## Contributing
-
-Contributions are welcome! For significant changes:
-
-1. Open an issue describing your proposal
-2. Fork the project
-3. Create a branch (`git checkout -b feature/MyFeature`)
-4. Commit your changes (`git commit -m 'Add MyFeature'`)
-5. Push to the branch (`git push origin feature/MyFeature`)
-6. Open a PR
-
 ## License
 
 This project is licensed under the [Apache License 2.0](./LICENSE.txt). You are free to use, modify, and distribute this software, as long as you maintain the copyright notices.
-
-# Credits
-
-Banner photography by **[Liza B](https://unsplash.com/pt-br/@clupeonella)** under the [Unsplash License](https://unsplash.com/license) and Logo by **Lisandra**. Weather data from **[WeatherAPI](https://www.weatherapi.com/)**.
-
-Inspired by modern UI stacks and public weather APIs.
 
 ---
 

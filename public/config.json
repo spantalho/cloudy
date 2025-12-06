@@ -1,14 +1,15 @@
 {
   "appConfig": {
+    "schemaVersion": 1,
     "ENV": "{VITE_APP_ENV}",
     "APP": {
-      "version": "0.1.2",
+      "version": "0.2.0",
       "name": "{VITE_APP_NAME}",
       "short_name": "{VITE_APP_SHORT_NAME}",
       "author": "Luis Gustavo R.C.",
       "license": "Apache 2.0",
       "services": {
-        "weather": "WeatherAPI"
+        "weather": ""
       }
     },
     "URLS": {
@@ -17,7 +18,7 @@
         "author_github": "https://github.com/spantalho",
         "license": "https://www.apache.org/licenses/LICENSE-2.0",
         "services": {
-          "weather": "https://www.weatherapi.com/"
+          "weather": ""
         }
       },
       "resources": {
@@ -46,6 +47,7 @@
     }
   },
   "defaultPreferences": {
+    "schemaVersion": 1,
     "units": {
       "temperature": "celsius",
       "speed": "kmh"

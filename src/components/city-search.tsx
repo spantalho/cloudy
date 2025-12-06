@@ -95,9 +95,9 @@ export default function CitySearch(ready: { ready: boolean }) {
     <div
       id="search-container"
       ref={containerRef}
-      className="relative w-full max-w-2xl md:max-w-3xl lg:max-w-4xl grid gap-2 mb-5 md:gap-3"
+      className="z-30 w-full max-w-2xl md:max-w-3xl lg:max-w-4xl grid gap-2 mb-5 md:gap-3"
     >
-      <InputGroup className="transition-colors border shadow dark:border-0">
+      <InputGroup className="transition-colors border-0 shadow">
         <InputGroupInput
           ref={inputRef}
           placeholder={t("search_placeholder")}
@@ -148,7 +148,7 @@ export default function CitySearch(ready: { ready: boolean }) {
                 <Item
                   key={`${_cityObj.id}-${_cityObj.name}`}
                   onClick={() => handleSelectCity(_cityObj.id)}
-                  className="bg-background cursor-pointer my-2 first:mt-2.5 last:mb-2.5 hover:bg-accent/30"
+                  className="absolute bg-background cursor-pointer my-2 first:mt-2.5 last:mb-2.5 hover:bg-accent/30"
                   variant={"outline"}
                 >
                   <ItemContent>

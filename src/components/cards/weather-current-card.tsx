@@ -19,7 +19,11 @@ import { useWeather } from "@/hooks/services/use-weather";
 import { Label } from "../ui/label";
 import { Badge } from "../ui/badge";
 
-export default function WeatherCurrentCard() {
+export default function WeatherCurrentCard({
+  className,
+}: {
+  className?: string;
+}) {
   const [weather, setWeather] = useState<Weather["current"]>();
   const [location, setLocation] = useState<Location>();
 
@@ -31,7 +35,7 @@ export default function WeatherCurrentCard() {
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
-  const { data, isLoading, isError, error } = useWeather(city, appConfig, lang);
+  let { data, isLoading, isError, error } = useWeather(city, appConfig, lang);
 
   useEffect(() => {
     if (!data) return;
@@ -50,13 +54,8 @@ export default function WeatherCurrentCard() {
   return (
     <card.Card
       id="current"
-      className="transition-colors border-0 bg-gradient-to-tr from-white to-sky-100 dark:from-black dark:to-sky-950/90"
+      className={`w-full transition-colors ${className}`}
     >
-      <card.CardHeader className="text-center md:text-start">
-        <card.CardTitle className="max-w-xs font-normal tracking-tight font-unbounded capitalize">
-          {t("titles.current.title")} <span className="tracking-tighter font-bold">{location.name}</span>
-        </card.CardTitle>
-      </card.CardHeader>
       <card.CardContent className="-mt-3 flex flex-col">
         <div className="flex flex-col gap-8 text-center items-center md:gap-0 md:text-start md:justify-between md:flex-row">
           <div className="flex flex-col gap-2 pointer-events-none">
@@ -64,9 +63,9 @@ export default function WeatherCurrentCard() {
               <WeatherIcon
                 isDay={weather.isDay}
                 code={weather.condition.code}
-                size={isDesktop ? 40 : 56}
+                size={75}
               />
-              <h2 className="font-unbounded text-5xl md:text-4xl">
+              <h2 className="font-unbounded tracking-tighter text-6xl">
                 {Math.trunc(
                   tempUnit === "celsius" ? weather.temp.c : weather.temp.f
                 )}
@@ -74,7 +73,11 @@ export default function WeatherCurrentCard() {
               </h2>
             </div>
             <p className="text-2xl md:text-lg">{weather.condition.text}</p>
-            {appConfig.ENV === "development" && <span className="text-[9px] text-muted">condition.code: {weather.condition.code}</span>}
+            {appConfig.ENV === "development" && (
+              <span className="text-[9px] text-muted">
+                condition.code: {weather.condition.code}
+              </span>
+            )}
           </div>
           <ScrollArea className="h-full w-full p-2 rounded-md border shadow md:h-[100px] md:w-auto">
             <React.Fragment>
@@ -116,7 +119,10 @@ export default function WeatherCurrentCard() {
                 </li>
                 <Separator className="my-2" />
                 <li className="w-full flex justify-between items-center px-3 md:px-0 md:justify-start">
-                  <lucideReact.Wind size={isDesktop ? 16 : 19} className="mr-2 text-muted" />
+                  <lucideReact.Wind
+                    size={isDesktop ? 16 : 19}
+                    className="mr-2 text-muted"
+                  />
                   <span>
                     {t("weather.wind")}:{" "}
                     {speedUnit === "kmh" ? weather.wind.kph : weather.wind.mph}{" "}
@@ -144,7 +150,10 @@ export default function WeatherCurrentCard() {
           <tooltip.Tooltip>
             <tooltip.TooltipTrigger>
               <Label className="text-xs">
-                {formatDate(location.localtime.epoch, { lang: lang, timezone: location.tzId })}
+                {formatDate(location.localtime.epoch, {
+                  lang: lang,
+                  timezone: location.tzId,
+                })}
               </Label>
             </tooltip.TooltipTrigger>
             <tooltip.TooltipContent>
@@ -152,21 +161,21 @@ export default function WeatherCurrentCard() {
             </tooltip.TooltipContent>
           </tooltip.Tooltip>
         </Badge>
-        <Badge className="-ml-0.5 rounded-l-none border border-border" variant="secondary">
+        <Badge
+          className="-ml-0.5 rounded-l-none border border-border"
+          variant="secondary"
+        >
           {location.region && (
-            <Label className="text-xs">
-              {location.region}
-            </Label>
+            <Label className="text-xs">{location.region}</Label>
           )}
-          {location.region && <Separator className="mx-1 h-4!" orientation="vertical" />}
+          {location.region && (
+            <Separator className="mx-1 h-4!" orientation="vertical" />
+          )}
           {location.country && (
-            <Label className="text-xs">
-              {location.country}
-            </Label>
+            <Label className="text-xs">{location.country}</Label>
           )}
           <lucideReact.MapPin />
         </Badge>
-
       </card.CardFooter>
     </card.Card>
   );

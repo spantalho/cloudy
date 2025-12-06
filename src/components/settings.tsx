@@ -18,17 +18,8 @@ import { useLang, type LangType } from "@/hooks/use-lang";
 import { useUnit, type SpeedUnit, type TempUnit } from "@/hooks/use-unit";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useMediaQuery } from "@uidotdev/usehooks";
-
-const languages = [
-  {
-    value: "en",
-    label: "English, US",
-  },
-  {
-    value: "pt",
-    label: "Português do Brasil",
-  },
-];
+import { Badge } from "./ui/badge";
+import { detectAppLangs } from "@/utils/common";
 
 export default function Settings(): JSX.Element {
   // combobox
@@ -37,50 +28,61 @@ export default function Settings(): JSX.Element {
 
   const { t } = useTranslation();
 
-  const { userPreferences, setUserPreferences } = useConfig()
-  const { theme, systemTheme, setTheme } = useTheme()
-  const { lang: activeLang, setLang } = useLang()
-  const { tempUnit, speedUnit, setSpeedUnit, setTempUnit } = useUnit()
+  const { userPreferences, setUserPreferences } = useConfig();
+  const { theme, systemTheme, setTheme } = useTheme();
+  const { lang: activeLang, setLang } = useLang();
+  const { tempUnit, speedUnit, setSpeedUnit, setTempUnit } = useUnit();
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const appLangs = detectAppLangs();
 
   const [toggles, setToggles] = useState<{
     notifications: boolean;
     animations: boolean;
+    shortcuts: boolean;
+    uiExperiments: boolean;
   }>({
     notifications: !!userPreferences?.notifications,
     animations: !!userPreferences?.animations,
-  })
+    shortcuts: !!userPreferences?.shortcuts,
+    uiExperiments: !!userPreferences?.ui_experiments,
+  });
 
   useEffect(() => {
     setToggles({
       notifications: !!userPreferences?.notifications,
       animations: !!userPreferences?.animations,
-    })
-  }, [userPreferences?.notifications, userPreferences?.animations])
+      shortcuts: !!userPreferences?.shortcuts,
+      uiExperiments: !!userPreferences?.ui_experiments,
+    });
+  }, [userPreferences?.notifications, userPreferences?.animations]);
 
-  const handleToggleChange = (key: "notifications" | "animations", checked: boolean) => {
+  const handleToggleChange = (
+    key: "notifications" | "animations" | "uiExperiments" | "shortcuts",
+    checked: boolean
+  ) => {
     // optimistic UI update
-    setToggles((prev) => ({ ...prev, [key]: checked }))
+    setToggles((prev) => ({ ...prev, [key]: checked }));
 
     try {
       setUserPreferences?.((prev: any) => ({
         ...prev,
         [key]: checked,
-      }))
+      }));
     } catch (err) {
-      console.warn("Error trying to setUserPreferences:", err)
+      console.warn("Error trying to setUserPreferences:", err);
     }
+  };
+
+  if (userPreferences.shortcuts) {
+    useHotkeys(
+      "alt+t",
+      useCallback(() => {
+        const newTheme = theme === "dark" ? "light" : "dark";
+        setTheme(newTheme);
+      }, [theme, setTheme])
+    );
   }
-
-  useHotkeys(
-    "alt+t",
-    useCallback(() => {
-      const newTheme = theme === "dark" ? "light" : "dark";
-      setTheme(newTheme);
-    }, [theme, setTheme])
-  );
-
 
   const SettingsContent = () => (
     <div className="flex gap-5 flex-col overflow-y-auto max-h-[400px] lg:max-h-[700px]">
@@ -90,6 +92,7 @@ export default function Settings(): JSX.Element {
           {t("settings.titles.interface")}
         </Label>
         <div className="flex flex-col gap-5">
+          {/* languages */}
           <div className="flex flex-col gap-3">
             <Label>{t("settings.options.interface.languages")}</Label>
             <popover.Popover open={open} onOpenChange={setOpen}>
@@ -101,9 +104,9 @@ export default function Settings(): JSX.Element {
                   className="w-[200px] justify-between"
                 >
                   {value
-                    ? languages.find((lang) => lang.value === value)?.label
-                    : languages.find((lang) => lang.value === activeLang)?.label
-                  }
+                    ? appLangs.find((l) => l.lang === value)?.lang
+                    : appLangs.find((l) => l.lang === activeLang)
+                        ?.lang}
                   <lucideReact.ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </button.Button>
               </popover.PopoverTrigger>
@@ -111,17 +114,19 @@ export default function Settings(): JSX.Element {
                 <command.Command>
                   <command.CommandInput placeholder="Search language..." />
                   <command.CommandList>
-                    <command.CommandEmpty>No language found.</command.CommandEmpty>
+                    <command.CommandEmpty>
+                      No language found.
+                    </command.CommandEmpty>
                     <command.CommandGroup>
-                      {languages.map((lang) => (
+                      {appLangs.map((l) => (
                         <command.CommandItem
-                          key={lang.value}
-                          value={lang.value}
+                          key={l.lang}
+                          value={l.lang}
                           onSelect={(currentValue) => {
                             try {
-                              setLang(currentValue as LangType)
+                              setLang(currentValue as LangType);
                             } catch (err) {
-                              console.warn("setLang error:", err)
+                              console.warn("setLang error:", err);
                             }
                             setValue(
                               currentValue === value ? "" : currentValue
@@ -132,12 +137,10 @@ export default function Settings(): JSX.Element {
                           <lucideReact.CheckIcon
                             className={cn(
                               "mr-2 h-4 w-4",
-                              value === lang.value
-                                ? "opacity-100"
-                                : "opacity-0"
+                              value === l.lang ? "opacity-100" : "opacity-0"
                             )}
                           />
-                          {lang.label}
+                          {l.lang} <span className="text-muted text-xs">({l.percentage}%)</span>
                         </command.CommandItem>
                       ))}
                     </command.CommandGroup>
@@ -146,28 +149,67 @@ export default function Settings(): JSX.Element {
               </popover.PopoverContent>
             </popover.Popover>
           </div>
+          {/* themes */}
           <div className="flex flex-col gap-3 ">
             <Label>
-              {t("settings.options.interface.theme")} {isDesktop && <Kbd>alt+t</Kbd>}
+              {t("settings.options.interface.theme")}{" "}
+              {isDesktop && <Kbd>alt+t</Kbd>}
             </Label>
             <div className="flex gap-2 items-center">
-              <button onClick={() => setTheme("dark")} className={`transition-colors flex items-center justify-center p-2 border rounded-md hover:bg-accent/70 ${systemTheme === "dark" ? "bg-primary text-primary-foreground hover:bg-primary" : ""}`}>
+              <button
+                onClick={() => setTheme("dark")}
+                className={`transition-colors flex items-center justify-center p-2 border rounded-md hover:bg-accent/70 ${
+                  systemTheme === "dark"
+                    ? "bg-primary text-primary-foreground hover:bg-primary"
+                    : ""
+                }`}
+              >
                 <lucideReact.Moon size={16} />
               </button>
-              <button onClick={() => setTheme("light")} className={`transition-colors flex items-center justify-center p-2 border rounded-md hover:bg-accent/70 ${systemTheme === "light" ? "bg-primary text-primary-foreground hover:bg-primary" : ""}`}>
+              <button
+                onClick={() => setTheme("light")}
+                className={`transition-colors flex items-center justify-center p-2 border rounded-md hover:bg-accent/70 ${
+                  systemTheme === "light"
+                    ? "bg-primary text-primary-foreground hover:bg-primary"
+                    : ""
+                }`}
+              >
                 <lucideReact.Sun size={16} />
               </button>
-              <button onClick={() => setTheme("system")} className={`transition-colors flex items-center justify-center p-2 border rounded-md hover:bg-accent/70 ${systemTheme === "system" ? "bg-primary text-primary-foreground hover:bg-primary" : ""}`}>
+              <button
+                onClick={() => setTheme("system")}
+                className={`transition-colors flex items-center justify-center p-2 border rounded-md hover:bg-accent/70 ${
+                  systemTheme === "system"
+                    ? "bg-primary text-primary-foreground hover:bg-primary"
+                    : ""
+                }`}
+              >
                 <lucideReact.Monitor size={16} />
               </button>
             </div>
           </div>
+          {/* animations */}
           <div className="flex flex-col gap-3">
-            <Label htmlFor="animations">{t("settings.options.interface.animations")}</Label>
+            <Label htmlFor="animations">
+              {t("settings.options.interface.animations")}
+            </Label>
             <Switch
               id="animations"
               checked={toggles.animations}
-              onCheckedChange={(v) => handleToggleChange("animations", Boolean(v))}
+              onCheckedChange={(v) =>
+                handleToggleChange("animations", Boolean(v))
+              }
+            />
+          </div>
+          {/* shortcuts */}
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="shortcuts">Shortcuts</Label>
+            <Switch
+              id="shortcuts"
+              checked={toggles.shortcuts}
+              onCheckedChange={(v) =>
+                handleToggleChange("shortcuts", Boolean(v))
+              }
             />
           </div>
         </div>
@@ -181,15 +223,23 @@ export default function Settings(): JSX.Element {
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-3">
             <Label>{t("settings.options.unit.temp")}</Label>
-            <radioGroup.RadioGroup onValueChange={(t: TempUnit) => setTempUnit(t)}>
+            <radioGroup.RadioGroup
+              onValueChange={(t: TempUnit) => setTempUnit(t)}
+            >
               <div className="flex items-center space-x-2">
-                <radioGroup.RadioGroupItem checked={tempUnit === "celsius"} value="celsius" />
+                <radioGroup.RadioGroupItem
+                  checked={tempUnit === "celsius"}
+                  value="celsius"
+                />
                 <Label htmlFor="celsius">
                   Celsius <span className="text-xs text-muted">(°C)</span>
                 </Label>
               </div>
               <div className="flex items-center space-x-2">
-                <radioGroup.RadioGroupItem checked={tempUnit === "fahrenheit"} value="fahrenheit" />
+                <radioGroup.RadioGroupItem
+                  checked={tempUnit === "fahrenheit"}
+                  value="fahrenheit"
+                />
                 <Label htmlFor="fahrenheit">
                   Fahrenheit
                   <span className="text-xs text-muted">(°F)</span>
@@ -199,9 +249,14 @@ export default function Settings(): JSX.Element {
           </div>
           <div className="flex flex-col gap-3">
             <Label>{t("settings.options.unit.speed")}</Label>
-            <radioGroup.RadioGroup onValueChange={(s: SpeedUnit) => setSpeedUnit(s)}>
+            <radioGroup.RadioGroup
+              onValueChange={(s: SpeedUnit) => setSpeedUnit(s)}
+            >
               <div className="flex items-center space-x-2">
-                <radioGroup.RadioGroupItem checked={speedUnit === "kmh"} value="kmh" />
+                <radioGroup.RadioGroupItem
+                  checked={speedUnit === "kmh"}
+                  value="kmh"
+                />
                 <Label htmlFor="kmh">
                   km/h
                   <span className="text-xs text-muted">
@@ -210,7 +265,10 @@ export default function Settings(): JSX.Element {
                 </Label>
               </div>
               <div className="flex items-center space-x-2">
-                <radioGroup.RadioGroupItem checked={speedUnit === "mph"} value="mph" />
+                <radioGroup.RadioGroupItem
+                  checked={speedUnit === "mph"}
+                  value="mph"
+                />
                 <Label htmlFor="mph">
                   mph
                   <span className="text-xs text-muted">
@@ -225,17 +283,41 @@ export default function Settings(): JSX.Element {
         <Separator className="mt-3" />
         {/* advanced */}
         <div className="flex flex-col gap-3">
-          <Label className="font-bold tracking-tight text-lg">{t("settings.titles.advanced")}
+          <Label className="font-bold tracking-tight text-lg">
+            {t("settings.titles.advanced")}
           </Label>
           <div className="flex flex-col gap-3 space-x-2">
             <Label htmlFor="notifications">
               {t("settings.options.advanced.notifications")}
             </Label>
-            <p className="-mt-1 text-xs text-muted max-w-xs">{t("settings.options.brief.notifications")}</p>
+            <p className="-mt-1 text-xs text-muted max-w-xs">
+              {t("settings.options.brief.notifications")}
+            </p>
             <Switch
               id="notifications"
               checked={toggles.notifications}
-              onCheckedChange={(v) => handleToggleChange("notifications", Boolean(v))}
+              onCheckedChange={(v) =>
+                handleToggleChange("notifications", Boolean(v))
+              }
+            />
+          </div>
+          {/* Experiments. Rounded corners ("fullscreen"), etc. */}
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="ui_experiments">
+              UI Experiments
+              <Badge variant={"outline"}>Experiment</Badge>
+            </Label>
+            <p className="-mt-1 text-xs text-muted max-w-xs">
+              Funcionalidades *malucas* que estão por aí. As bordas arredondadas
+              no canto superior fazem parte. Se não lhe for interessante,
+              desative.
+            </p>
+            <Switch
+              id="ui_experiments"
+              checked={toggles.uiExperiments}
+              onCheckedChange={(v) =>
+                handleToggleChange("uiExperiments", Boolean(v))
+              }
             />
           </div>
         </div>

@@ -1,28 +1,27 @@
 import { useConfig } from "@/contexts/config-context";
-import { Separator } from "./ui/separator";
 import { motion } from "framer-motion";
 import Settings from "./settings";
 import { useTheme } from "@/hooks/use-theme";
 import { useTranslation } from "react-i18next";
-import { useMediaQuery } from "@uidotdev/usehooks";
+import * as lucide from "lucide-react";
+import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
+import { Label } from "./ui/label";
 
 export default function Navigator() {
   const { appConfig } = useConfig();
   const { theme } = useTheme();
   const { t } = useTranslation();
 
-  const isDesktop = useMediaQuery("(min-width: 768px)");
-
   return (
     <nav
       role="navigation"
-      className={`${isDesktop ? "top-3" : "bottom-3"
-        } z-50 fixed flex w-full items-center max-w-[95vw] md:max-w-3xl lg:max-w-4xl justify-between bg-accent/70 backdrop-blur-2xl shadow rounded-full border border-border text-xs py-2 px-4 ease-in-out`}
+      className={`flex w-full items-center justify-between text-sm ease-in-out`}
     >
       <div className="pointer-events-none flex gap-4 items-center relative">
         <motion.img
           aria-hidden
-          className="absolute w-auto h-8"
+          className="absolute w-auto h-9"
           src="images/logo_light.png"
           alt=""
           animate={{
@@ -35,7 +34,7 @@ export default function Navigator() {
         />
         <motion.img
           aria-hidden
-          className="absolute w-auto h-8"
+          className="absolute w-auto h-9"
           src="images/logo_dark.png"
           alt=""
           animate={{
@@ -47,22 +46,23 @@ export default function Navigator() {
           }}
         />
 
-        <h1 className="ml-18 font-semibold text-lg font-unbounded tracking-tighter">
+        <h1 className="ml-20 font-semibold text-lg font-unbounded tracking-tighter lowercase">
           {appConfig.APP.name}
         </h1>
       </div>
-      <div className="flex items-center">
+
+      <div className="flex gap-2 items-center">
+        <Button className="backdrop-blur-sm" size={"sm"} variant={"outline"}>
+          <lucide.MapPin /> São Paulo <lucide.ChevronDown />
+        </Button>
+        <Button className="backdrop-blur-sm" size={"icon-sm"} variant={"outline"}>
+          <lucide.Search />
+        </Button>
+        <Button className="backdrop-blur-sm" size={"icon-sm"} variant={"outline"}>
+          <lucide.Map />
+        </Button>
+        <Separator className="h-6! mx-1" orientation="vertical" />
         <Settings />
-        {isDesktop && (
-          <Separator className="mx-3 h-6!" orientation="vertical" />
-        )}
-        {isDesktop && (
-          <div className="flex gap-4 items-center capitalize">
-            <a href="#current">{t("nav.current")}</a>
-            <a href="#forecast">{t("nav.forecast")}</a>
-            <a href="#chart">{t("nav.chart")}</a>
-          </div>
-        )}
       </div>
     </nav>
   );

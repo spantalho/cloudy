@@ -14,7 +14,7 @@ export default function DebugCard() {
       className="dev-mode-overlay"
     >
       <card.CardHeader>
-        <card.CardTitle className="flex items-center font-normal font-unbounded tracking-tight capitalize">
+        <card.CardTitle className="flex items-center tracking-tight capitalize">
           {appConfig.ENV} mode
         </card.CardTitle>
         <card.CardDescription className="max-w-sm">

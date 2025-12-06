@@ -1,6 +1,7 @@
 import type React from "react";
 
 export interface AppConfig {
+  schemaVersion: 1,
   ENV: "development" | "staging" | "production";
   APP: {
     version: string;
@@ -45,14 +46,22 @@ export interface AppConfig {
 }
 
 export interface UserPreferences {
+  schemaVersion: 1,
   units: {
     temperature: "celsius" | "fahrenheit";
     speed: "kmh" | "mph";
   };
+  places: {
+    detected: string | null,
+    favorite: string | null,
+    history: [] | null,
+  },
   theme: "system" | "dark" | "light"
   lang: "system" | "pt" | "en";
   notifications: boolean;
   animations: boolean;
+  shortcuts: boolean;
+  ui_experiments: boolean;
 }
 
 export interface FullConfig {
